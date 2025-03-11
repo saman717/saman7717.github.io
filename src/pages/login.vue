@@ -4,7 +4,7 @@
         <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">ورود به حساب کاربری</h2>
   
         <!-- فرم لاگین -->
-        <form @submit.prevent="handleLogin">
+        <form @submit.prevent="loginuser">
           <!-- فیلد ایمیل -->
           <div class="mb-6">
             <label for="email" class="block text-sm font-medium text-gray-700">ایمیل</label>
@@ -22,6 +22,7 @@
           <div class="mb-6">
             <label for="password" class="block text-sm font-medium text-gray-700">رمز عبور</label>
             <input
+            
               type="password"
               id="password"
               v-model="password"
@@ -51,8 +52,34 @@
   </template>
   
   <script setup>
+  import {ref} from "vue";  
+  import { useRoute } from "vue-router";
+  import { RouterLink } from 'vue-router';
+  import api from "../utils/axios";
 
-import { RouterLink } from 'vue-router';
+  const email = ref("")
+  const password = ref("")
+  const router = useRoute()
+
+
+  const loginuser = async () =>{
+    try{
+      const response =await api.post("users/auth/login",{
+        email:email.value,
+        password : passweord.value
+
+      });
+
+      const token = response.data.to;
+      localStorage.setItem("token",token);
+      console.log("jwt"), token;
+
+      router.push("/")
+
+    }catch(error){
+      console.log("login error:" , error.response?.data || error.message);
+    }
+  }
 
   </script>
   
