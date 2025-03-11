@@ -4,7 +4,7 @@
         <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">ورود به حساب کاربری</h2>
   
         <!-- فرم لاگین -->
-        <form @submit.prevent="loginuser">
+        <form @submit.prevent="loginUser">
           <!-- فیلد ایمیل -->
           <div class="mb-6">
             <label for="email" class="block text-sm font-medium text-gray-700">ایمیل</label>
@@ -62,24 +62,28 @@
   const router = useRoute()
 
 
-  const loginuser = async () =>{
-    try{
-      const response =await api.post("users/auth/login",{
-        email:email.value,
-        password : passweord.value
+  const loginUser = async () => {
+  try {
+    const response = await api.post("/users/auth/login", {
+      email: email.value,
+      password: password.value, // اصلاح تایپ اشتباه
+    });
 
-      });
-
-      const token = response.data.to;
-      localStorage.setItem("token",token);
-      console.log("jwt"), token;
-
-      router.push("/")
-
-    }catch(error){
-      console.log("login error:" , error.response?.data || error.message);
+    const token = response.data.token; // اصلاح `to` به `token`
+    if (token) {
+      localStorage.setItem("token", token);
+      console.log("JWT Token:", token);
+      router.push("/"); // هدایت به صفحه اصلی بعد از ورود موفق
+    } else {
+      console.error("Login failed: No token received.");
     }
+  } catch (error) {
+    console.error("Login error:", error.response?.data || error.message);
   }
+};
+
+
+
 
   </script>
   
