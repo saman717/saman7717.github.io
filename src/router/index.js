@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import login from '../pages/login.vue';
 import singnup from '../pages/singnup.vue';
-
+import dashbord from '../pages/dashbord.vue';
 const routes = [
   {
     path: '/login',
@@ -12,6 +12,11 @@ const routes = [
     path: '/signup',
     name : 'signup',
     component : singnup,
+  },
+  {
+    path:"/dashbord",
+    name:dashbord,
+    component: dashbord
   }
   // سایر روت‌ها را اینجا اضافه کنید
 ];
