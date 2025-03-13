@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import login from '../pages/login.vue';
 import singnup from '../pages/singnup.vue';
 import dashbord from '../pages/dashbord.vue';
+import Home from '../pages/Home.vue';
+
 const routes = [
   {
     path: '/login',
@@ -17,8 +19,12 @@ const routes = [
     path:"/dashbord",
     name:dashbord,
     component: dashbord
+  },
+  {
+    path:"/",
+    name: "Home",
+    component: Home
   }
-  // سایر روت‌ها را اینجا اضافه کنید
 ];
 
 const router = createRouter({
