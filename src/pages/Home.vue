@@ -14,10 +14,10 @@
 import { ref, onMounted } from "vue";
 import api from "../utils/axios";
 import ProductCarousel from "../components/layot/ProductCarousel.vue";
-import CardSkeleton from "../components/CardSkeleton.vue"; // کامپوننت لودینگ
+import CardSkeleton from "../components/CardSkeleton.vue"; 
 
 const products = ref([]);
-const isLoading = ref(true); // وضعیت لودینگ
+const isLoading = ref(true);
 
 const fetchProducts = async () => {
   try {
@@ -26,7 +26,7 @@ const fetchProducts = async () => {
   } catch (error) {
     console.error("Error fetching products:", error.response?.data || error.message);
   } finally {
-    isLoading.value = false; // بعد از دریافت داده، لودینگ خاموش شود
+    isLoading.value = false; 
   }
 };
 
@@ -34,3 +34,4 @@ onMounted(() => {
   fetchProducts();
 });
 </script>
+د

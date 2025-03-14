@@ -2,7 +2,7 @@
     <div class="m-6 swiper-container overflow-hidden ">
       <div class="swiper-wrapper">
         <div 
-          v-for="(product, index) in products.slice(0,12)" 
+          v-for="(product, index) in products.slice(10,22)" 
           :key="index" 
           class="swiper-slide"
         >
@@ -37,7 +37,7 @@
     mounted() {
       new Swiper('.swiper-container', {
         modules: [Navigation, Pagination], // ماژول‌های استفاده‌شده
-        loop: false, // اسلاید بی‌نهایت
+        loop: true  , // اسلاید بی‌نهایت
         slidesPerView: 4, // تعداد اسلایدهای قابل مشاهده
         spaceBetween: 30, // فاصله بین اسلایدها
         navigation: {

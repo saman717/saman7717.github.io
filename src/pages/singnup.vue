@@ -1,84 +1,94 @@
 <template>
-    <div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600">
-      <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">ثبت‌نام</h2>
+  <div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600">
+    <div class="max-w-md mx-auto p-6 bg-white  rounded-lg shadow-md mt-10">
+    <h2 class="text-xl font-semibold text-center mb-4">ثبت‌نام - مرحله اول</h2>
+    <form @submit.prevent="registerUser" class="space-y-4">
+      <input 
+        type="text" 
+        v-model="name" 
+        placeholder="نام" 
+        required 
+        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      />
+      <input 
+        type="email" 
+        v-model="email" 
+        placeholder="ایمیل" 
+        required 
+        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      />
+      <input 
+        type="password" 
+        v-model="password" 
+        placeholder="رمز عبور" 
+        required 
+        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      />
+      <input 
+        type="password" 
+        v-model="confirmPassword" 
+        placeholder="تأیید رمز عبور" 
+        required 
+        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      />
+      <button 
+        type="submit" 
+        class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-300"
+      >
+        ادامه
+      </button>
+    </form>
+    <p v-if="errorMessage" class="text-red-500 text-center mt-2">{{ errorMessage }}</p>
+  </div>
+  </div>
   
-        <!-- فرم ثبت‌نام -->
-        <form @submit.prevent="handleSignup">
-          <!-- فیلد نام -->
-          <div class="mb-6">
-            <label for="name" class="block text-sm font-medium text-gray-700">نام</label>
-            <input
-              type="text"
-              id="name"
-              v-model="name"
-              placeholder="نام خود را وارد کنید"
-              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-  
-          <!-- فیلد ایمیل -->
-          <div class="mb-6">
-            <label for="email" class="block text-sm font-medium text-gray-700">ایمیل</label>
-            <input
-              type="email"
-              id="email"
-              v-model="email"
-              placeholder="example@example.com"
-              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-  
-          <!-- فیلد رمز عبور -->
-          <div class="mb-6">
-            <label for="password" class="block text-sm font-medium text-gray-700">رمز عبور</label>
-            <input
-              type="password"
-              id="password"
-              v-model="password"
-              placeholder="********"
-              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-  
-          <!-- فیلد تأیید رمز عبور -->
-          <div class="mb-6">
-            <label for="confirmPassword" class="block text-sm font-medium text-gray-700">تأیید رمز عبور</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              v-model="confirmPassword"
-              placeholder="********"
-              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-  
-          <!-- دکمه ثبت‌نام -->
-          <button
-            type="submit"
-            class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300"
-          >
-            ثبت‌نام
-          </button>
-        </form>
-  
-        <!-- لینک ورود به سیستم -->
-        <div class="mt-6 text-center">
-          <span class="text-sm text-gray-600">قبلاً حساب کاربری دارید؟</span>
-          <RouterLink  to="/login" class="text-sm text-blue-600 hover:text-blue-500">ورود به سیستم</RouterLink>
-        </div>
-      </div>
-    </div>
-  </template>
-  
-  <script setup>
+</template>
 
-import { RouterLink } from 'vue-router';
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
 
-  
-  </script>
-  
+const name = ref('');
+const email = ref('');
+const password = ref('');
+const confirmPassword = ref('');
+const errorMessage = ref('');
+const router = useRouter();
+
+const registerUser = async () => {
+  if (password.value !== confirmPassword.value) {
+    errorMessage.value = 'رمز عبور و تأیید آن یکسان نیست!';
+    return;
+  }
+
+  try {
+    const response = await axios.post('https://api.escuelajs.co/api/v1/users/', {
+      name: name.value,
+      email: email.value,
+      password: password.value,
+      avatar: 'https://picsum.photos/800', // آواتار موقت
+    });
+
+    // فرض کنید که API شما یک توکن JWT ارسال می‌کند
+    const { token } = response.data; // این بستگی به پاسخ API دارد
+
+    if (token) {
+      // ذخیره کردن توکن در حافظه محلی
+      localStorage.setItem('jwtToken', token);
+    }
+
+    // ایجاد و ذخیره کد تأیید
+    const verificationCode = Math.floor(100000 + Math.random() * 900000);
+    console.log(`کد تأیید شما: ${verificationCode}`);
+    
+    localStorage.setItem('verificationCode', verificationCode);
+    localStorage.setItem('registeredEmail', email.value);
+
+    router.push('/verify-email');
+  } catch (error) {
+    errorMessage.value = 'خطا در ثبت‌نام! لطفاً اطلاعات را بررسی کنید.';
+    console.error(error.response?.data || error.message);
+  }
+};
+</script>
