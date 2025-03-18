@@ -52,82 +52,45 @@
   </template>
   
   <script setup>
-  import {ref} from "vue";  
- 
+  import { ref } from "vue";
+  import { useAuthStore } from "../store/auth"; // مسیر استور
   import { useRouter } from "vue-router";
-  import api from "../utils/axios";
-
-  const email = ref("")
-  const password = ref("")
-
-
-
-
-const router = useRouter(); 
-
-const loginUser = async () => {
-  try {
-    const response = await api.post("/auth/login", {
-      email: email.value,
-      password: password.value,
-    });
-
-    const { access_token } = response.data;
-
-    if (!access_token) {
-      alert("ورود ناموفق. توکن دریافت نشد!");
-      return;
-    }
-
-    // ذخیره توکن در localStorage
-    localStorage.setItem("token", access_token);
-
-    // درخواست دریافت اطلاعات کاربر
-    const userResponse = await api.get("/auth/profile", {
-      headers: { Authorization: `Bearer ${access_token}` },
-    });
-
-    const user = userResponse.data;
-    if (!user) {
-      alert("خطا در دریافت اطلاعات کاربر!");
-      return;
-    }
-
-    // ذخیره اطلاعات کاربر در localStorage
-    localStorage.setItem("user", JSON.stringify(user));
-
-    // هدایت به داشبورد
-    router.push("/dashbord");
-  } catch (error) {
-    console.error("Full Error:", error);
-
-    if (error.response) {
-      const status = error.response.status;
-      const errorMessage = error.response.data?.message || "";
-
-      if (status === 401) {
-        if (errorMessage.includes("User not found")) {
-          alert("کاربر با این ایمیل یافت نشد. لطفاً ثبت‌نام کنید.");
-        } else if (errorMessage.includes("Incorrect password")) {
-          alert("رمز عبور اشتباه است. لطفاً دوباره امتحان کنید.");
-        } else {
-          alert("ورود ناموفق. لطفاً اطلاعات خود را بررسی کنید.");
-        }
-      } else {
-        alert("خطایی رخ داده است. لطفاً بعداً امتحان کنید.");
-      }
-    } else {
-      alert("مشکل در ارتباط با سرور. لطفاً اینترنت خود را بررسی کنید.");
-    }
-  }
-};
-
-
-
-
-
-
-
-  </script>
+  import api from "../utils/axios"; // استفاده از api که خودتان ساختید
   
- 
+  const email = ref("");
+  const password = ref("");
+  const authStore = useAuthStore();
+  const router = useRouter();
+  
+  const loginUser = async () => {
+    try {
+      // درخواست ورود به سیستم
+      const response = await api.post("/auth/login", {
+        email: email.value,
+        password: password.value,
+      });
+  
+      const { access_token } = response.data;
+  
+      if (!access_token) {
+        alert("ورود ناموفق. لطفاً اطلاعات خود را بررسی کنید.");
+        return;
+      }
+  
+      // درخواست برای اطلاعات پروفایل کاربر
+      const userResponse = await api.get("/auth/profile", {
+        headers: { Authorization: `Bearer ${access_token}` },
+      });
+  
+      // ذخیره اطلاعات کاربر و توکن در استور
+      authStore.setUser(userResponse.data, access_token);
+      localStorage.setItem("token", access_token); // ذخیره توکن در localStorage
+  
+      // هدایت به داشبورد
+      router.push("/dashbord");
+    } catch (err) {
+      console.error(err);
+      alert("خطا در ورود. لطفاً دوباره تلاش کنید.");
+    }
+  };
+  </script>

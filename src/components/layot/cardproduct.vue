@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-sm w-full hover:scale-110  rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all ms-1.5 duration-300 bg-white flex flex-col">
+    <div class=" max-w-sm w-full hover:scale-110  rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all ms-1.5 duration-300 bg-white flex flex-col">
       <div class="relative">
         <img
           class="w-full h-48 object-cover "

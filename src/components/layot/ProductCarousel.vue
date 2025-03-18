@@ -1,93 +1,95 @@
 <template>
-    <div class="m-6 swiper-container overflow-hidden ">
+  <div class="relative bg-blue-400 rounded-2xl m-4">
+    <div class="m-1 relative w-[98%] lg:w-[90%] mx-auto swiper-container overflow-hidden" ref="swiperContainer">
+
       <div class="swiper-wrapper">
         <div 
           v-for="(product, index) in products.slice(10,22)" 
           :key="index" 
-          class="swiper-slide"
-        >
-          <cardproduct :product="product" />
+          class="swiper-slide">
+              <cardproduct :product="product" />
         </div>
+  
       </div>
+        <div class="absolute swiper-button-next" ref="nextBtn"></div>
+          <div class="absolute  swiper-button-prev" ref="prevBtn"></div>
+
+          <div div class="swiper-pagination"></div>
+
+
+      </div>
+    
+  </div>
   
-      <!-- دکمه‌های ناوبری -->
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
+</template>
+
   
-      <!-- نقاط پاژینیشن -->
-      <div class="swiper-pagination"></div>
-    </div>
-  </template>
-  
-  <script>
-  // Import Swiper و ماژول‌های مورد نیاز
-  import { Swiper } from 'swiper'; // هسته اصلی Swiper
-  import { Navigation, Pagination } from 'swiper/modules'; // ماژول‌های Navigation و Pagination
-  import 'swiper/swiper-bundle.css'; // استایل‌های Swiper
-  import cardproduct from './cardproduct.vue';
-  
-  export default {
-    components: { cardproduct },
-    props: {
-      products: {
-        type: Array,
-        required: true,
+  <script setup>
+ import { ref, onMounted } from 'vue';
+import { Swiper } from 'swiper';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/swiper-bundle.css';
+import cardproduct from './cardproduct.vue';
+
+const props = defineProps({
+  products: {
+    type: Array,
+    required: true,
+  },
+});
+
+const swiperContainer = ref(null);
+const nextBtn = ref(null);
+const prevBtn = ref(null);
+
+onMounted(() => {
+  new Swiper(swiperContainer.value, {
+    modules: [Navigation, Pagination],
+    loop: true,
+    slidesPerView: 4,
+    spaceBetween: 30,
+    navigation: {
+      nextEl: nextBtn.value,
+      prevEl: prevBtn.value,
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 10,
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+      },
+      1024: {
+        slidesPerView: 4,
+        spaceBetween: 30,
       },
     },
-    mounted() {
-      new Swiper('.swiper-container', {
-        modules: [Navigation, Pagination], // ماژول‌های استفاده‌شده
-        loop: true  , // اسلاید بی‌نهایت
-        slidesPerView: 4, // تعداد اسلایدهای قابل مشاهده
-        spaceBetween: 30, // فاصله بین اسلایدها
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-        },
-        breakpoints: {
-          320: {
-            slidesPerView: 1,
-            spaceBetween: 10,
-          },
-          768: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          1024: {
-            slidesPerView: 4,
-            spaceBetween: 30,
-          },
-        },
-      });
-    },
-  };
+  });
+});
+
   </script>
   
   <style scoped>
 .swiper-container {
   padding: 20px 0;
-  position: relative; /* برای قرارگیری صحیح پاژینیشن */
-}
-
-.swiper-pagination {
-  position: absolute; /* قرارگیری پاژینیشن در پایین کاروسل */
-  bottom: 10px !important; /* کاهش فاصله از پایین */
-  margin-top: 10px !important; /* فاصله از بالا */
-}
-
-.swiper-pagination-bullet {
-  margin: 0 6px !important; /* فاصله بین نقاط */
+  position: static; /* تغییر از relative به static */
+  z-index: auto; /* جلوگیری از تأثیر z-index */
+  border-radius: 10px;
 }
 
 .swiper-slide {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px; /* فاصله زیر کارت محصول */
+  margin-bottom: 20px;
+  position: relative; /* اضافه کردن position */
+  z-index: 1; /* کارت محصول از منو بالاتر نباشه */
 }
 
 .swiper-button-next,
@@ -96,9 +98,12 @@
   background: white;
   width: 40px;
   height: 40px;
+  margin: 0 76px;
   border-radius: 50%;
+  top: 40%;
+
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  top: 45%; /* تنظیم موقعیت عمودی دکمه‌ها */
+  z-index: 10; /* اطمینان از بالاتر بودن */
 }
 
 .swiper-button-next::after,

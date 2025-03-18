@@ -1,12 +1,14 @@
 <template>
-  <div>
-    <h2 class="text-center mt-5 text-2xl font-bold mb-4">محصولات</h2>
-    
-    <ProductCarousel v-if="!isLoading" :products="products" />
+  <div class="mt-20">
+    <div class="">
+      <ProductCarousel v-if="!isLoading" :products="products" />
     
     <div v-else class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
       <CardSkeleton v-for="n in 4" :key="n" />
     </div>
+
+    </div>
+   
   </div>
 </template>
 

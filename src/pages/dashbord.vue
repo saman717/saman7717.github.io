@@ -1,4 +1,4 @@
-<template>
+<template >
   <div class="min-h-screen flex bg-gray-100">
     <!-- Sidebar -->
     <div class="w-64 bg-blue-800 text-white">
@@ -44,18 +44,14 @@
     <!-- Main Content -->
     <div class="flex-1 p-8">
       <!-- Header -->
-      <div class="bg-white p-6 rounded-lg shadow-md mb-8 flex justify-between ">
-        <div class="w-30 h-30 ">
+      <div class="bg-white p-6 rounded-lg shadow-md mb-8 flex justify-center items-center ">
+        <div class="w-30 h-30 ml-7 flex items-center ">
 
           <div class="flex flex-col justify-center items-center">
-          <img class="rounded-full h-25" :src="user.avatar" alt="">
-          <h1 class="text-xl font-bold">{{ user?.name || "کاربر" }}  </h1>
+            <img class="rounded-full h-25" :src="AuthStore.user?.avatar" alt="">
+            <h1 class="text-lg  font-bold ">{{ AuthStore.user?.name || "کاربر" }}  </h1>
           </div>
         </div>
-        <div class="flex gap-x-8 items-center">
-          <p class="text-gray-600 mt-2">آخرین ورود</p>
-        </div>
-        
       </div>
 
       <!-- Stats Cards -->
@@ -92,30 +88,22 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "../store/auth"; 
 
 const router = useRouter();
 const user = ref({}); 
+const AuthStore = useAuthStore()
+
 
 onMounted(() => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    router.push("/login"); 
-    return;
+  if(!AuthStore.token){
+    router.push("/login")
   }
-
-  const storedUser = localStorage.getItem("user");
-  if (storedUser) {
-    try {
-      user.value = JSON.parse(storedUser);
-    } catch (error) {
-      console.error("Error parsing user data:", error);
-    }
-  }
+  
 });
 
 const logout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
+  AuthStore.logout();
   router.push("/login");
 };
 console.log(user);
