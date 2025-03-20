@@ -1,11 +1,9 @@
 <template>
-    
- <div class="z-[9000] flex md:hidden items-center justify-between h-16 w-full bg-white dark:bg-zinc-700 px-4">
+    <div class="fixed bg-white dark:bg-zinc-700 z-[9000] flex   top-0 left-0 right-0 md:hidden items-center justify-between h-16 w-full  px-4">
+        <div class="  ">
       <!-- NAV ICON -->
-      <div>
-        <!-- <svg class="w-6 h-6 dark:text-white cursor-pointer" @click="togglemenu">
-          <use xlink:href="#bar3"></use>
-        </svg> -->
+      <div class="">
+        <bar3 class="w-6 h-6  dark:text-white cursor-pointer" @click="togglemenu"/>
 
       </div>
 
@@ -18,9 +16,7 @@
           <div class="flex items-center gap-x-3.5">
             <img src="./asset/app-logo.png" alt="" class="block w-[42px] h-10" />
 
-            <!-- <svg class="w-[100px] h-10 text-orange-300">
-              <use xlink:href="#logo"></use>
-            </svg> -->
+            <logo class="w-9 h-6"/>
           </div>
           <div @click="close" class="cursor-pointer">
             <!-- <svg class="w-6 h-6 dark:text-white">
@@ -134,7 +130,7 @@
         <div class="max-h-[80%] overflow-scroll">
           <div :class="{'border-b border-b-gray-300 dark:border-b-white/10': products.length > 0}"
             class=" overflow-y-auto scrollbar-custom h-[20px ]   p-1 divide-y divide-gray-100 dark:divide-white/10 child:py-5">
-            <!-- بررسی و اطمینان از بارگذاری داده‌ها -->
+            <!-- procces and control data-->
             <div v-if="products.length" v-for="(product, index) in products" :key="index" class="flex gap-x-2.5">
               <img :src="product.img" class="w-[120px] h-[120px]" alt="product1" />
               <div class="flex flex-col justify-between">
@@ -152,7 +148,7 @@
                 </div>
               </div>
             </div>
-            <!-- در صورتی که محصولات خالی باشند -->
+            <!-- if is empty -->
             <div v-else class="flex mt-10  flex-col items-center text-center font-DanaMedium text-gray-500 dark:text-white">
               <p class="">محصولی برای نمایش وجود ندارد</p>
               <!-- <svg class="w-10 h-10 text-gray-600 dark:text-white">
@@ -185,59 +181,13 @@
 
     </div>
 
+    </div>
+ 
+
 </template>
 
 
 <script setup>
-import { ref, computed } from 'vue';
-
-// کنترل نمایش منوی موبایل
-const isopen = ref(false);
-
-// کنترل نمایش بخش سبد خرید موبایل
-const shopinglist = ref(false);
-
-// فرض کنید محصولات در یک آرایه ذخیره می‌شوند؛ در صورت لزوم این آرایه را پر کنید
-const products = ref([]);
-
-// محاسبه قیمت کل محصولات (اگر در بخش سبد خرید استفاده می‌شود)
-const totalPrice = computed(() => {
-  return products.value.reduce((sum, product) => sum + product.price, 0);
-});
-
-// قالب‌بندی قیمت کل (مثال)
-const formattedTotalPrice = computed(() => {
-  return new Intl.NumberFormat('fa-IR').format(totalPrice.value);
-});
-
-// توابع مربوط به منوی موبایل
-const togglemenu = () => {
-  isopen.value = !isopen.value;
-};
-
-const close = () => {
-  isopen.value = false;
-};
-
-// توابع مربوط به بخش سبد خرید
-const listfunc = () => {
-  shopinglist.value = true;
-};
-
-const closlist = () => {
-  shopinglist.value = false;
-};
-
-// توابع مربوط به زیر منو (برای فروشگاه)
-const submenu = ref(false);
-const submenufunction = () => {
-  submenu.value = !submenu.value;
-};
-
-// توابع مربوط به تغییر تم (نمونه)
-const themeMood = ref('#icon-id'); // آیکون مورد نظر را تنظیم کنید
-const titlethem = ref('تیره');
-const toggleTheme = () => {
-  titlethem.value = titlethem.value === 'تیره' ? 'روشن' : 'تیره';
-};
+import bar3 from '../../assets/bar3.svg';
+import logo from '../../assets/logo.svg'
 </script>

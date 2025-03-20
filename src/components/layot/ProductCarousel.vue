@@ -78,8 +78,8 @@ onMounted(() => {
   <style scoped>
 .swiper-container {
   padding: 20px 0;
-  position: static; /* تغییر از relative به static */
-  z-index: auto; /* جلوگیری از تأثیر z-index */
+  position: static;  /* change of realtive to static*/
+    z-index: auto; 
   border-radius: 10px;
 }
 
@@ -88,8 +88,8 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
-  position: relative; /* اضافه کردن position */
-  z-index: 1; /* کارت محصول از منو بالاتر نباشه */
+  position: relative; 
+  z-index: 1; /* card product not fron of menu*/
 }
 
 .swiper-button-next,
@@ -103,7 +103,7 @@ onMounted(() => {
   top: 40%;
 
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 10; /* اطمینان از بالاتر بودن */
+  z-index: 10; 
 }
 
 .swiper-button-next::after,

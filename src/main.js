@@ -7,7 +7,7 @@ import { createPinia } from "pinia"
 const app = createApp(App);
 const pinia = createPinia();
 
-// درست استفاده کردن از Pinia
+// Using Pinia correctly
 app.use(pinia);  
-app.use(router); // اضافه کردن router بعد از pinia
+app.use(router); // Add router after pinia
 app.mount("#app");

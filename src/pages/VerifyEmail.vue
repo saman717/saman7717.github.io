@@ -58,13 +58,13 @@
   const verifyCode = () => {
   const storedCode = localStorage.getItem('verificationCode');
   if (code.value === storedCode) {
-    // کد درست است، هدایت به داشبورد
+// Code is correct, redirect to dashboard
     alert('ایمیل شما تأیید شد!');
     
-    // دریافت توکن JWT از حافظه محلی
+// Get JWT token from local storage
     const token = localStorage.getItem('jwtToken');
     if (token) {
-      // تنظیم توکن در هدر درخواست‌ها برای استفاده بعدی
+// Set the token in the request header for later use
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
 
@@ -86,7 +86,7 @@
     startTimer();
     const registeredEmail = localStorage.getItem('registeredEmail');
     if (!registeredEmail) {
-    router.push('/signup'); // اگر کاربر مستقیماً آدرس را وارد کرد، به صفحه ثبت‌نام برگردد
+    router.push('/signup'); // If the user enters the address directly, return to the registration page
     }
     
   });

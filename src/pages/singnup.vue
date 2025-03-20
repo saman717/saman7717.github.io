@@ -69,18 +69,17 @@ const registerUser = async () => {
       password: password.value,
       avatar: 'https://picsum.photos/800', // آواتار موقت
     });
-
-    // فرض کنید که API شما یک توکن JWT ارسال می‌کند
-    const { token } = response.data; // این بستگی به پاسخ API دارد
+      // Assume your API sends a JWT token
+        const { token } = response.data; // This depends on the API response
 
     if (token) {
-      // ذخیره کردن توکن در حافظه محلی
+    // Store the token in local memory
       localStorage.setItem('jwtToken', token);
     }
 
-    // ایجاد و ذخیره کد تأیید
+    // Generate and save verification code
     const verificationCode = Math.floor(100000 + Math.random() * 900000);
-    console.log(`کد تأیید شما: ${verificationCode}`);
+    console.log(`کد تأیید شما ${verificationCode}`);
     
     localStorage.setItem('verificationCode', verificationCode);
     localStorage.setItem('registeredEmail', email.value);

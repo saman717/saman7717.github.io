@@ -11,31 +11,37 @@ const routes = [
     path: '/login',
     name: 'login',
     component: login,
+    meta: { showHeader: false },
   },
   {
     path: '/signup',
     name : 'signup',
     component : singnup,
+    meta: { showHeader: false },
   },
   {
     path:"/dashbord",
     name:'dashbord',
-    component: dashbord
+    component: dashbord,
+    meta: { showHeader: false },
   },
   {
     path:"/",
     name: "Home",
-    component: Home
+    component: Home,
+    meta: { showHeader: true },
   },
   {
     path:"/verify-email",
     name:'VerifyEmail',
-    component : VerifyEmail 
+    component : VerifyEmail,
+    meta: { showHeader: false },
   },
   {
     path:"/profile",
     name :'profile',
-    component :profile
+    component :profile,
+    meta: { showHeader: false },
   
   }
 ];

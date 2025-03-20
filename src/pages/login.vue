@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600">
+    <div class="min-h-screen  flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600">
       <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">ورود به حساب کاربری</h2>
   
@@ -53,15 +53,17 @@
   
   <script setup>
   import { ref } from "vue";
-  import { useAuthStore } from "../store/auth"; // مسیر استور
+  import { useAuthStore } from "../store/auth"; 
   import { useRouter } from "vue-router";
-  import api from "../utils/axios"; // استفاده از api که خودتان ساختید
+  import api from "../utils/axios";   
+
   
   const email = ref("");
   const password = ref("");
   const authStore = useAuthStore();
   const router = useRouter();
-  
+
+
   const loginUser = async () => {
     try {
       // درخواست ورود به سیستم
@@ -77,16 +79,16 @@
         return;
       }
   
-      // درخواست برای اطلاعات پروفایل کاربر
+      // Request for information//
       const userResponse = await api.get("/auth/profile", {
         headers: { Authorization: `Bearer ${access_token}` },
       });
   
-      // ذخیره اطلاعات کاربر و توکن در استور
+      //Storing user information and tokens in the store//
       authStore.setUser(userResponse.data, access_token);
-      localStorage.setItem("token", access_token); // ذخیره توکن در localStorage
+      localStorage.setItem("token", access_token); // save to localstorage
   
-      // هدایت به داشبورد
+      // push to dashboard
       router.push("/dashbord");
     } catch (err) {
       console.error(err);

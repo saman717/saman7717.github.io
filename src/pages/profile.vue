@@ -3,7 +3,7 @@
       <div class="bg-white shadow-lg rounded-lg p-8  flex flex-col items-center">
         <h1 class="text-2xl font-bold mb-6 text-center">ویرایش پروفایل</h1>
         <form @submit.prevent="updateUser" class="  gap-4 items-center justify-items-end">
-          <!-- فیلد نام -->
+          <!-- fild name -->
           <div class="m-6">
             <label for="name" class="block text-sm font-medium text-gray-700">نام:</label>
             <input
@@ -15,7 +15,7 @@
             />
           </div>
   
-          <!-- فیلد ایمیل -->
+          <!-- fild email -->
           <div class="m-6">
             <label for="email" class="block text-sm font-medium text-gray-700">ایمیل:</label>
             <input
@@ -27,7 +27,7 @@
             />
           </div>
   
-          <!-- فیلد تاریخ عضویت (غیرقابل ویرایش) -->
+          <!-- fild joind date unavilalbe -->
           <div class="m-6">
             <label for="creationAt" class="block text-sm font-medium text-gray-700">تاریخ عضویت:</label>
             <input
@@ -58,6 +58,7 @@ import { useRouter } from 'vue-router';
 import api from '../utils/axios';
 import { useAuthStore } from '../store/auth';
 
+
 const router = useRouter();
 const authStore = useAuthStore();
 
@@ -66,12 +67,13 @@ const localUser = ref({
   email: ''
 });
 
+
 onMounted(() => {
   if (!authStore.token) {
     alert("لطفا ابتدا وارد حساب کاربری خود شوید.");
     router.push("/login");
   } else if (authStore.user) {
-    // ایجاد کپی از اطلاعات فعلی
+    // Create a copy of the current data
     localUser.value = { 
       name: authStore.user.name,
       email: authStore.user.email
@@ -93,7 +95,7 @@ const updateUser = async () => {
       }
     );
 
-    // فقط بعد از تایید سرور، مقدار اصلی رو آپدیت کن:
+    // Update the original value only after server confirmation:
     authStore.setUser(response.data, authStore.token);
     alert("اطلاعات با موفقیت بروزرسانی شد!");
   } catch (error) {
