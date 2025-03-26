@@ -30,13 +30,13 @@
           <div
             class="flex w-[24px] h-[24px] lg:h-[34px] lg:w-[34px]  items-center justify-center bg-neutral-300/40 rounded-full">
             <shopingcard
-              class="w-[19px] h-[19px] lg:h-6 lg:w-6 text-black/50 hover:text-white dark:hover:text-black transition-all cursor-pointer"
+              class="w-[19px] select-none h-[19px] lg:h-6 lg:w-6 text-black/50 hover:text-white dark:hover:text-black transition-all cursor-pointer"
               @click="addToCart" />
           </div>
           <div
-            class="flex w-[24px] h-[24px] lg:h-[34px] lg:w-[34px] items-center justify-center bg-neutral-300/40 rounded-full">
+            class="flex w-[24px]  h-[24px] lg:h-[34px] lg:w-[34px] items-center justify-center bg-neutral-300/40 rounded-full">
             <ArrowsRightLeft
-              class="w-[19px] h-[19px] lg:h-6 lg:w-6  text-black/50 hover:text-white  dark:hover:text-black transition-all cursor-pointer" />
+              class="w-[19px] select-none h-[19px] lg:h-6 lg:w-6  text-black/50 hover:text-white  dark:hover:text-black transition-all cursor-pointer" />
           </div>
         </div>
         <div class="p-2 pt-0 flex items-center justify-center gap-x-2.5">

@@ -113,4 +113,87 @@
   html.dark{
     background: #3f3f46;
   }
+
+  html.dark .scrollbar-custom{
+    scrollbar-color: #fdba74 #3f3f46;
+  }
+  .scrollbar-custom {
+    max-height: calc(100vh - 10rem); /* جلوگیری از ورود اسکرول به زیر فوتر */
+    overflow-y: auto;
+    padding-bottom: 4rem; /* ایجاد فضای اضافی برای جلوگیری از هم‌پوشانی */
+    scrollbar-width: thin; /* برای فایرفاکس */
+    scrollbar-color: #fdba74 #fff; /* رنگ اسکرول */
+  }
+  
+  /* اسکرول بار برای مرورگرهای مبتنی بر Webkit (کروم، سافاری، اج جدید) */
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 8px; /* عرض اسکرول بار */
+    height: 1px; /* برای اسکرول افقی */
+  }
+  
+  /* پس‌زمینه نوار اسکرول */
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background: #fffefe;
+    border-radius: 4px;
+  }
+  
+  /* رنگ و استایل دسته (thumb) اسکرول */
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background: rgb(240, 2, 2); /* رنگ اصلی */
+    border-radius: 10px;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  /* تغییر رنگ هنگام هاور روی اسکرول */
+  .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+    background: #d00; /* رنگ تیره‌تر هنگام هاور */
+  }
+  
+  /* مخفی کردن دکمه‌های بالا و پایین اسکرول */
+  .scrollbar-custom::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  /* scrollar desktop style */
+  html.dark .scrolldesktop{
+    scrollbar-color: #fdba74 #3f3f46;
+  }
+.scrolldesktop {
+    max-height: calc(100vh - 10rem); /* جلوگیری از ورود اسکرول به زیر فوتر */
+    overflow-y: auto;
+    padding-bottom: 4rem; /* ایجاد فضای اضافی برای جلوگیری از هم‌پوشانی */
+    scrollbar-width: thin; /* برای فایرفاکس */
+    scrollbar-color: #fdba74 #fff; /* رنگ اسکرول */
+  }
+  
+  /* اسکرول بار برای مرورگرهای مبتنی بر Webkit (کروم، سافاری، اج جدید) */
+.scrolldesktop::-webkit-scrollbar {
+    width: 8px; /* عرض اسکرول بار */
+    height: 1px; /* برای اسکرول افقی */
+  }
+  
+  /* پس‌زمینه نوار اسکرول */
+.scrolldesktop::-webkit-scrollbar-track {
+    background: #fffefe;
+    border-radius: 4px;
+  }
+  
+  /* رنگ و استایل دسته (thumb) اسکرول */
+.scrolldesktop::-webkit-scrollbar-thumb {
+    background: rgb(240, 2, 2); /* رنگ اصلی */
+    border-radius: 10px;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  /* تغییر رنگ هنگام هاور روی اسکرول */
+.scrolldesktop::-webkit-scrollbar-thumb:hover {
+    background: #d00; /* رنگ تیره‌تر هنگام هاور */
+  }
+  
+  /* مخفی کردن دکمه‌های بالا و پایین اسکرول */
+.scrolldesktop::-webkit-scrollbar-button {
+    display: none;
+  }
+  
+  
 }

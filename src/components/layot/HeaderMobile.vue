@@ -1,10 +1,10 @@
 <template>
-  <div 
+  <div
     class="fixed bg-white dark:bg-zinc-700 flex top-0 left-0 right-0 md:hidden z-[9000] items-center justify-between h-16 w-full p-4">
 
     <!-- logo menu -->
     <div class="">
-      <bar3 class="w-6 h-6  dark:text-white cursor-pointer transime"  @click="togglemenu" />
+      <bar3 class="w-6 h-6  dark:text-white cursor-pointer transime" @click="togglemenu" />
 
     </div>
 
@@ -15,12 +15,12 @@
 
     <!-- SHOP LOGO   -->
     <div>
-      <shopingcard class="w-6 h-6 dark:text-white" @click="ToggleShopingMobile" />
+      <shopingcard class="w-6 h-6 dark:text-white cursor-pointer" @click="ToggleShopingMobile" />
     </div>
 
-<!-- side menu right -->
+    <!-- side menu right -->
     <div v-if="isopen" v-cloak
-      class="fixed overflow-scroll  top-0 right-0 bottom-0 w-64 min-h-screen bg-white dark:bg-zinc-700 pt-3 px-4 transform transime"
+      class="fixed overflow-auto  top-0 right-0 bottom-0 w-64 min-h-screen bg-white dark:bg-zinc-700 pt-3 px-4 transform transime"
       :class="{
         'translate-x-0 opacity-100': isopen,
         'translate-x-full opacity-0': !isopen
@@ -37,7 +37,7 @@
         </div>
         <logo class="w-15 h-15 text-orange-300" />
         <div @click="togglemenu" class="cursor-pointer">
-          <xmark class="dark:text-white" />
+          <xmark class="dark:text-white cursor-pointer" />
         </div>
       </div>
       <!-- main and li... -->
@@ -93,32 +93,34 @@
         <div class="inline-block mb-15">
           <a class="inline-flex gap-x-1 text-orange-300" href=" #">
 
-            <shopingcard class="w-6 h-6 text-orange-300" />
+            <shopingcard class="w-6 h-6 text-orange-300"  />
             سبد خرید
           </a>
         </div>
       </div>
     </div>
 
-    
+
     <!-- sabad kharid hover -->
-    <div v-if="shopinglist" 
-      class="fixed top-0 left-0 bottom-0 w-[75%] min-h-screen bg-white pt-3 px-4 dark:bg-zinc-700">
-      <div class=" pb-5 flex items-center justify-between">
-          <xmark class="w-6 h-6 dark:text-white" @click="ToggleShopingMobile" />
+    <div v-if="shopinglist"
+      class="fixed top-0  left-0 bottom-0 w-[75%] max-h-screen bg-white pt-3 px-4 dark:bg-zinc-700 flex flex-col">
+
+      <div class="h-16 flex items-center justify-between border-b border-gray-300 dark:border-white/10">
+        <xmark class="cursor-pointer w-6 h-6 dark:text-white" @click="ToggleShopingMobile" />
         <a href="#" class="font-danaDemiBold dark:text-white "> سبد خرید </a>
       </div>
-      <!-- main body -->
-      <div class="">
-        <div :class="{ 'border-b border-b-gray-300 dark:border-b-white/10': products.length > 0 }"
-          class=" overflow-y-auto scrollbar-custom h-[20px ]   p-1 divide-y divide-gray-100 dark:divide-white/10 child:py-5">
-          <!-- procces and control data-->
-          <div v-if="products.length" v-for="(product, index) in products" :key="index" class="flex gap-x-2.5">
-            <img :src="product.img" class="w-[120px] h-[120px]" alt="product1" />
-            <div class="flex flex-col justify-between">
-              <h4 class="font-DanaMedium text-zinc-700 dark:text-white text-base line-clamp-2">
-                {{ product.title }}
-              </h4>
+
+      <div class="flex-grow overflow-y-auto scrollbar-custom  p-1 divide-y divide-gray-100 dark:divide-white/10">
+        <div v-if="cartStore.cartItems.length" v-for="(product, index) in cartStore.cartItems" :key="index"
+          class="flex mt-5 mb-5 gap-x-2.5 items-center justify-start h-[140px] w-[280px] gap-6">
+          <div>
+            <img :src="product.images" class="w-[80px] h-[80px]" alt="product1" />
+          </div>
+          <div class="flex flex-col w-[150px] overflow-hidden justify-between">
+            <h4 class="font-DanaMedium text-zinc-700 dark:text-white text-base line-clamp-2">
+              {{ product.title }}
+            </h4>
+            <div class="flex gap-x-3">
               <div>
                 <span class="text-teal-600 dark:text-emerald-500 text-xs font-DanaMedium tracking-tighter">
                   {{ product.discount }} تومان تخفیف
@@ -128,31 +130,33 @@
                   <span class="font-Dana">تومان</span>
                 </div>
               </div>
+              <div class="gap-x-2 rounded-2xl h-[40px] bg-orange-300 justify-center text-white w-19 flex items-center">
+                <button @click="cartStore.increaseQuantity(product.id)" class="text-xl cursor-pointer">+</button>
+                <p class="w-[22px] text-center ">{{ product.quantity }} </p>
+                <button @click="cartStore.decreaseQuantity(product.id)" class="text-xl cursor-pointer">-</button>
+              </div>
             </div>
           </div>
-          <!-- if is empty -->
-          <div v-else
-            class="flex mt-10  flex-col items-center text-center font-DanaMedium text-gray-500 dark:text-white">
-            <p class="">محصولی برای نمایش وجود ندارد</p>
-           
-              <empty class="w-10 h-10 text-gray-600 dark:text-white" />
-          </div>
+        </div>
+
+        <div v-else class="flex flex-col items-center justify-center h-full text-center font-DanaMedium text-gray-500 dark:text-white">
+          <p class="">محصولی برای نمایش وجود ندارد</p>
+          <empty class="w-10 h-10 text-gray-600 dark:text-white" />
         </div>
       </div>
 
-      <div class="flex items-center gap-4 ">
-
-        <div v-if="products.length > 0" class="mt-1.5 w-[50%] ">
+      <div class="h-16 bg-white dark:bg-zinc-700 absolute bottom-0 right-0 left-0 flex items-center justify-between px-4 border-t border-gray-300 dark:border-white/10">
+        <div v-if="cartStore.cartItems.length > 0">
+          <span class="text-zinc-700 dark:text-white tracking-wider font-DanaMedium">
+            {{ cartStore.totalPrice }}
+            <span class="font-Dana">تومان</span>
+          </span>
+        </div>
+        <div v-if="cartStore.cartItems.length > 0">
           <a href="#"
-            class="h-14 w-[100%] tracking-tightest flex items-center justify-center rounded-xl font-Dana bg-teal-600 dark:bg-emerald-500 dark:hover:bg-emerald-700 text-white hover:bg-teal-700 transition-colors">
+            class="h-12 w-[120px] tracking-tightest flex items-center justify-center rounded-xl font-Dana bg-teal-600 dark:bg-emerald-500 dark:hover:bg-emerald-700 text-white hover:bg-teal-700 transition-colors">
             ثبت سفارش
           </a>
-        </div>
-        <div>
-          <div v-if="products.length > 0" class="text-zinc-700 dark:text-white tracking-wider font-DanaMedium">
-            {{ formattedTotalPrice }}
-            <span class="font-Dana">تومان </span>
-          </div>
         </div>
       </div>
 
@@ -172,7 +176,7 @@
 
 
 <script setup>
-import { ref,onMounted, onUnmounted  } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import bar3 from '../../assets/bar3.svg';
 import logo from '../../assets/logo.svg';
 import xmark from '../../assets/mark.svg';
@@ -180,15 +184,17 @@ import home from '../../assets/home.svg'
 import shopingcard from '../../assets/shopingcard.svg'
 import chevronDown from '../../assets/chavronDown.svg'
 import ArrowRightEndOnRectangle from '../../assets/ArrowRightEndOnRectangle.svg'
-import { useThemeStore } from "../../store/them"
 import moon from '../../assets/moon.svg';
+import { useThemeStore } from "../../store/them"
+import { useCartStore } from "../../store/cartStore";
+
 import sun from '../../assets/sun.svg';
 import menu from "../../../menu.json";
 import empty from "../../assets/empty.svg";
 
 
 const themeStore = useThemeStore();
-
+const cartStore = useCartStore()
 
 const isopen = ref(false)
 const shopinglist = ref(false)

@@ -98,7 +98,7 @@ const isAuthenticated = computed(() => authStore.user !== null);
                 </div>
                 <!-- body card sabad -->
                 <div :class="{ 'h-[350px]': cartStore.cartItems.length > 2 }"
-                  class="border-b overflow-y-auto scrollbar-custom border-b-gray-300 dark:border-b-white/10 pb-7 divide-y-2 divide-gray-100 dark:divide-white/10 child:py-6">
+                  class="border-b overflow-y-auto scrolldesktop border-b-gray-300 dark:border-b-white/10 pb-7 divide-y-2 divide-gray-100 dark:divide-white/10 child:py-6">
                   <!-- procces data and control -->
                   <div v-if="cartStore.cartItems.length" v-for="(product, index) in cartStore.cartItems" :key="index"
                     class="flex mt-5 mb-5 gap-x-2.5 h-[165px] w-[343px] gap-6">
@@ -117,8 +117,10 @@ const isAuthenticated = computed(() => authStore.user !== null);
                           <span class="font-Dana">تومان</span>
                           </div>
                         </div>
-                        <div class="flex-none rounded-2xl h-[40px] bg-orange-300 text-white w-15 flex items-center justify-center">
-                          <span class=""> +  </span> {{ product.quantity }} <span class="">   - </span>
+                        <div class="gap-x-2 rounded-2xl h-[40px] bg-orange-300 justify-center text-white w-19 flex items-center">
+                         <button  @click="cartStore.increaseQuantity(product.id)"class="text-xl cursor-pointer">+</button>
+                         <p class="w-[22px] text-center ">{{ product.quantity }} </p>
+                         <button @click="cartStore.decreaseQuantity(product.id)" class="text-xl cursor-pointer">-</button>
                         </div>
 
                       </div>
@@ -139,7 +141,7 @@ const isAuthenticated = computed(() => authStore.user !== null);
                       مبلغ قابل پرداخت
                     </span>
                     <div class="text-zinc-700 dark:text-white tracking-wider font-DanaMedium">
-                      {{ formattedTotalPrice }}
+                      {{ cartStore.totalPrice }}
                       <span class="font-Dana">تومان </span>
                     </div>
                   </div>
