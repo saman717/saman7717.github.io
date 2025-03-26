@@ -4,7 +4,7 @@
 
       <div class="swiper-wrapper">
         <div 
-          v-for="(product, index) in products.slice(10,22)" 
+          v-for="(product, index) in products.slice(0,10)" 
           :key="index" 
           class="swiper-slide">
               <cardproduct :product="product" />

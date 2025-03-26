@@ -1,193 +1,228 @@
 <template>
-    <div class="fixed bg-white dark:bg-zinc-700 z-[9000] flex   top-0 left-0 right-0 md:hidden items-center justify-between h-16 w-full  px-4">
-        <div class="  ">
-      <!-- NAV ICON -->
-      <div class="">
-        <bar3 class="w-6 h-6  dark:text-white cursor-pointer" @click="togglemenu"/>
+  <div 
+    class="fixed bg-white dark:bg-zinc-700 flex top-0 left-0 right-0 md:hidden z-[9000] items-center justify-between h-16 w-full p-4">
 
-      </div>
+    <!-- logo menu -->
+    <div class="">
+      <bar3 class="w-6 h-6  dark:text-white cursor-pointer transime"  @click="togglemenu" />
 
-      <!-- menu mobile -->
+    </div>
 
-      <div v-if="isopen" v-cloak
-        class="fixed top-0 right-0 bottom-0 w-64 min-h-screen bg-white pt-3 px-4 dark:bg-zinc-700">
-        <!-- header mobilmenu -->
-        <div class="flex items-center justify-between pb-5 mb-6 border-b border-b-gray-300 dark:border-b-white">
-          <div class="flex items-center gap-x-3.5">
-            <img src="./asset/app-logo.png" alt="" class="block w-[42px] h-10" />
+    <!-- LOGO  -->
+    <div>
+      <logo class="w-[100px] h-10 text-orange-300" />
+    </div>
 
-            <logo class="w-9 h-6"/>
-          </div>
-          <div @click="close" class="cursor-pointer">
-            <!-- <svg class="w-6 h-6 dark:text-white">
-              <use xlink:href="#x-mark"></use>
-            </svg> -->
-          </div>
+    <!-- SHOP LOGO   -->
+    <div>
+      <shopingcard class="w-6 h-6 dark:text-white" @click="ToggleShopingMobile" />
+    </div>
+
+<!-- side menu right -->
+    <div v-if="isopen" v-cloak
+      class="fixed overflow-scroll  top-0 right-0 bottom-0 w-64 min-h-screen bg-white dark:bg-zinc-700 pt-3 px-4 transform transime"
+      :class="{
+        'translate-x-0 opacity-100': isopen,
+        'translate-x-full opacity-0': !isopen
+      }">
+      <!-- header mobilmenu -->
+
+      <div
+        class="flex sticky   top-0 bg-white dark:bg-zinc-700 transime items-center justify-between pb-5 mb-6 border-b border-b-gray-300 dark:border-b-white">
+        <div class="flex items-center  gap-x-3.5">
+          <img src="/src/assets/app-logo.png" alt="" class="block w-[42px] h-10" />
+
+
+
         </div>
-        <!-- main and li... -->
-        <div>
-          <div class="flex items-center rounded-md mb-4 bg-orange-200/30 pr-2 text-orange-300 h-10">
-            <a href="#" class="flex items-center gap-x-1.5">
-              <!-- <svg class="w-[20px] h-[20px]">
-                <use xlink:href="#home"></use>
-              </svg> -->
+        <logo class="w-15 h-15 text-orange-300" />
+        <div @click="togglemenu" class="cursor-pointer">
+          <xmark class="dark:text-white" />
+        </div>
+      </div>
+      <!-- main and li... -->
+      <div>
+        <ul class="space-y-6 text-orange-300 font-DanaMedium child:pr-2.5 pr-2">
+          <li v-for="menuItem in menu.MenuItemsHeader" :key="menuItem.id">
+            <div class="flex items-center justify-between">
+              <a :href="menuItem.url" class="flex items-center gap-x-1.5">
+                <home v-if="menuItem.title == 'صفحه اصلی'" class="w-[20px] h-[20px]" />
+                <shopingcard v-if="menuItem.title === 'فروشگاه'" class="w-[20px] h-[20px]" />
 
-              صفحه اصلی
-            </a>
-          </div>
-          <ul class="text-black space-y-6 dark:text-white child:pr-2.5">
-            <li>
-              <div class="flex items-center justify-between">
-                <a href="#" class="flex items-center gap-x-1.5">
-                  <!-- <svg class="w-[20px] h-[20px]">
-                    <use xlink:href="#shopping-cart"></use>
-                  </svg> -->
+                {{ menuItem.title }}
+              </a>
+              <span v-if="menuItem.submenu.length" @click="toggleSubmenu(menuItem.id)"
+                :class="{ 'rotate-180': openSubmenus[menuItem.id] }"
+                class="cursor-pointer transition-transform duration-300">
+                <chevronDown class="w-[20px] h-[20px]" />
+              </span>
+            </div>
 
-                  فروشگاه
+            <div class="overflow-hidden transition-all duration-300"
+              :style="{ maxHeight: openSubmenus[menuItem.id] ? '300px' : '0px' }">
+              <div class="flex flex-col gap-y-3 pr-7 mt-3 text-sm text-zinc-600 dark:text-white">
+                <a v-for="submenu in menuItem.submenu" :key="submenu.id" :href="submenu.url">
+                  {{ submenu.title }}
                 </a>
-                <span @click="submenufunction" :class="{'rotate-180': submenu, 'rotate-0': !submenu}"
-                  class="transition-all cursor-pointer">
-                  <!-- <svg class="w-[20px] h-[20px]">
-                    <use xlink:href="#chevron-down"></use>
-                  </svg> -->
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!-- footer and log in and dark and light... -->
+      <div
+        class="flex flex-col px-2.5 font-DanaMedium cursor-default space-y-6 pt-8 mt-8 border-t border-t-gray-300 dark:border-t-white">
+        <div class="inline-block">
+          <a class="inline-flex items-center gap-x-1 text-orange-300" href="">
+
+            <ArrowRightEndOnRectangle class="w-6 h-6 inline-flex dark:text-orange-300" />
+
+            ورود| ثبت نام
+          </a>
+        </div>
+
+        <div class="inline-block ">
+          <span @click="themeStore.toggleTheme" class=" flex cursor-pointer text-orange-300 gap-x-1">
+
+            <moon v-if="themeStore.theme === 'light'" class="h-6 w-6 text-orange-300 transime " />
+            <sun v-else class="h-6 w-6 text-orange-300 transime" />
+
+            تم {{ themeStore.theme === "dark" ? "لایت" : "دارک" }}
+          </span>
+        </div>
+        <div class="inline-block mb-15">
+          <a class="inline-flex gap-x-1 text-orange-300" href=" #">
+
+            <shopingcard class="w-6 h-6 text-orange-300" />
+            سبد خرید
+          </a>
+        </div>
+      </div>
+    </div>
+
+    
+    <!-- sabad kharid hover -->
+    <div v-if="shopinglist" 
+      class="fixed top-0 left-0 bottom-0 w-[75%] min-h-screen bg-white pt-3 px-4 dark:bg-zinc-700">
+      <div class=" pb-5 flex items-center justify-between">
+          <xmark class="w-6 h-6 dark:text-white" @click="ToggleShopingMobile" />
+        <a href="#" class="font-danaDemiBold dark:text-white "> سبد خرید </a>
+      </div>
+      <!-- main body -->
+      <div class="">
+        <div :class="{ 'border-b border-b-gray-300 dark:border-b-white/10': products.length > 0 }"
+          class=" overflow-y-auto scrollbar-custom h-[20px ]   p-1 divide-y divide-gray-100 dark:divide-white/10 child:py-5">
+          <!-- procces and control data-->
+          <div v-if="products.length" v-for="(product, index) in products" :key="index" class="flex gap-x-2.5">
+            <img :src="product.img" class="w-[120px] h-[120px]" alt="product1" />
+            <div class="flex flex-col justify-between">
+              <h4 class="font-DanaMedium text-zinc-700 dark:text-white text-base line-clamp-2">
+                {{ product.title }}
+              </h4>
+              <div>
+                <span class="text-teal-600 dark:text-emerald-500 text-xs font-DanaMedium tracking-tighter">
+                  {{ product.discount }} تومان تخفیف
                 </span>
-              </div>
-              <div v-if="submenu" class="flex flex-col gap-y-3 pr-7 mt-3 text-sm text-zinc-600 dark:text-white">
-                <a href="#"> قهوه ویژه </a>
-                <a href="#"> قهوه ویژه </a>
-                <a href="#"> قهوه ویژه </a>
-                <a href="#"> قهوه ویژه </a>
-                <a href="#"> قهوه ویژه </a>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <!-- footer and log in and dark and light... -->
-        <div
-          class="flex flex-col px-2.5 font-DanaMedium cursor-default space-y-6 pt-8 mt-8 border-t border-t-gray-300 dark:border-t-white">
-          <div class="inline-block">
-            <a class="inline-flex items-center gap-x-1 text-orange-300" href="">
-              <!-- <svg class="w-6 h-6 inline-flex dark:text-orange-300">
-                <use xlink:href="#arrow-right-end-on-rectangle"></use>
-              </svg> -->
-
-              ورود| ثبت نام
-            </a>
-          </div>
-
-          <div class="inline-block">
-            <span @click="toggleTheme" class="inline cursor-pointer text-orange-300 gap-x-1">
-              <!-- <svg class="w-6 h-6 inline-flex">
-                <use :xlink:href="themeMood"></use>
-              </svg> -->
-
-              تم {{titlethem}}
-            </span>
-          </div>
-          <div class="inline-block">
-            <a class="inline-flex gap-x-1 text-orange-300" href=" #">
-              <!-- <svg class="w-6 h-6 text-orange-300">
-                <use xlink:href="#shopping-cart "></use>
-              </svg> -->
-              سبد خرید
-            </a>
-          </div>
-        </div>
-      </div>
-
-
-
-
-
-      <!-- shoppin section mobile -->
-
-
-      <!-- LOGO  -->
-      <div>
-        <!-- <svg class="w-[100px] h-10 text-orange-300">
-          <use xlink:href="#logo"></use>
-        </svg> -->
-      </div>
-
-      <!-- SHOP LOGO   -->
-      <div>
-        <!-- <svg @click="listfunc" class="w-6 h-6 dark:text-white">
-          <use xlink:href="#shopping-cart"></use>
-        </svg> -->
-      </div>
-
-      <!-- shop click -->
-      <div v-cloak v-if="shopinglist"
-        class="fixed top-0 left-0 bottom-0 w-[75%] min-h-screen bg-white pt-3 px-4 dark:bg-zinc-700">
-        <div class=" pb-5 flex items-center justify-between">
-          <!-- <svg @click="closlist" class="w-6 h-6 dark:text-white">
-            <use xlink:href="#x-mark"></use>
-          </svg> -->
-
-          <a href="#" class="font-DanaDemiBold dark:text-white "> سبد خرید </a>
-        </div>
-        <!-- main body -->
-        <div class="max-h-[80%] overflow-scroll">
-          <div :class="{'border-b border-b-gray-300 dark:border-b-white/10': products.length > 0}"
-            class=" overflow-y-auto scrollbar-custom h-[20px ]   p-1 divide-y divide-gray-100 dark:divide-white/10 child:py-5">
-            <!-- procces and control data-->
-            <div v-if="products.length" v-for="(product, index) in products" :key="index" class="flex gap-x-2.5">
-              <img :src="product.img" class="w-[120px] h-[120px]" alt="product1" />
-              <div class="flex flex-col justify-between">
-                <h4 class="font-DanaMedium text-zinc-700 dark:text-white text-base line-clamp-2">
-                  {{ product.title }}
-                </h4>
-                <div>
-                  <span class="text-teal-600 dark:text-emerald-500 text-xs font-DanaMedium tracking-tighter">
-                    {{ product.discount }} تومان تخفیف
-                  </span>
-                  <div class="text-zinc-700 dark:text-white tracking-wider font-DanaMedium">
-                    {{ product.price }}
-                    <span class="font-Dana">تومان</span>
-                  </div>
+                <div class="text-zinc-700 dark:text-white tracking-wider font-DanaMedium">
+                  {{ product.price }}
+                  <span class="font-Dana">تومان</span>
                 </div>
               </div>
             </div>
-            <!-- if is empty -->
-            <div v-else class="flex mt-10  flex-col items-center text-center font-DanaMedium text-gray-500 dark:text-white">
-              <p class="">محصولی برای نمایش وجود ندارد</p>
-              <!-- <svg class="w-10 h-10 text-gray-600 dark:text-white">
-                <use xlink:href="#empty"></use>
-              </svg> -->
-            </div>
           </div>
-        </div>
-
-        <div class="flex items-center gap-4 ">
-
-          <div v-if="products.length>0" class="mt-1.5 w-[50%] ">
-            <a href="#"
-              class="h-14 w-[100%] tracking-tightest flex items-center justify-center rounded-xl font-Dana bg-teal-600 dark:bg-emerald-500 dark:hover:bg-emerald-700 text-white hover:bg-teal-700 transition-colors">
-              ثبت سفارش
-            </a>
-          </div>
-          <div>
-            <div v-if="products.length>0" class="text-zinc-700 dark:text-white tracking-wider font-DanaMedium">
-              {{formattedTotalPrice}}
-              <span class="font-Dana">تومان </span>
-            </div>
+          <!-- if is empty -->
+          <div v-else
+            class="flex mt-10  flex-col items-center text-center font-DanaMedium text-gray-500 dark:text-white">
+            <p class="">محصولی برای نمایش وجود ندارد</p>
+           
+              <empty class="w-10 h-10 text-gray-600 dark:text-white" />
           </div>
         </div>
       </div>
 
+      <div class="flex items-center gap-4 ">
 
-      <!-- shoping foter  -->
-
+        <div v-if="products.length > 0" class="mt-1.5 w-[50%] ">
+          <a href="#"
+            class="h-14 w-[100%] tracking-tightest flex items-center justify-center rounded-xl font-Dana bg-teal-600 dark:bg-emerald-500 dark:hover:bg-emerald-700 text-white hover:bg-teal-700 transition-colors">
+            ثبت سفارش
+          </a>
+        </div>
+        <div>
+          <div v-if="products.length > 0" class="text-zinc-700 dark:text-white tracking-wider font-DanaMedium">
+            {{ formattedTotalPrice }}
+            <span class="font-Dana">تومان </span>
+          </div>
+        </div>
+      </div>
 
     </div>
 
-    </div>
- 
+  </div>
+
+
+  <!-- shoping foter  -->
+
+
+
+
+
 
 </template>
 
 
 <script setup>
+import { ref,onMounted, onUnmounted  } from 'vue';
 import bar3 from '../../assets/bar3.svg';
-import logo from '../../assets/logo.svg'
+import logo from '../../assets/logo.svg';
+import xmark from '../../assets/mark.svg';
+import home from '../../assets/home.svg'
+import shopingcard from '../../assets/shopingcard.svg'
+import chevronDown from '../../assets/chavronDown.svg'
+import ArrowRightEndOnRectangle from '../../assets/ArrowRightEndOnRectangle.svg'
+import { useThemeStore } from "../../store/them"
+import moon from '../../assets/moon.svg';
+import sun from '../../assets/sun.svg';
+import menu from "../../../menu.json";
+import empty from "../../assets/empty.svg";
+
+
+const themeStore = useThemeStore();
+
+
+const isopen = ref(false)
+const shopinglist = ref(false)
+
+
+const products = ref([
+  // { id: "1", title: "قهوه اسپرسو بن مانو مدل پریسکا 250 گرمی", img: "./asset/products/p1.png", discount: "14,500", price: "175,000" },
+  // { id: "2", title: "چای سیاه ممتاز دارچین", img: "./asset/products/p2.png", discount: "10,000", price: "100,000" },
+  // { id: "3", title: "شکلات تلخ 85%", img: "./asset/products/p3.png", discount: "8,000", price: "80,000" },
+  // { id: "4", title: "دمنوش گل محمدی", img: "./asset/products/p4.png", discount: "5,000", price: "50,000" },
+  // { id: "5", title: "دمنوش گل محمدی", img: "./asset/products/p4.png", discount: "5,000", price: "50,000" },
+  // { id: "6", title: "دمنوش گل محمدی", img: "./asset/products/p4.png", discount: "5,000", price: "50,000" },
+  // { id: "7", title: "دمنوش گل محمدی", img: "./asset/products/p4.png", discount: "200,000", price: "1,200,000", }
+])
+
+const togglemenu = () => {
+  isopen.value = !isopen.value
+  shopinglist.value = false;
+
+}
+
+
+
+const openSubmenus = ref({});
+
+const toggleSubmenu = (id) => {
+  openSubmenus.value[id] = !openSubmenus.value[id];
+};
+
+const ToggleShopingMobile = () => {
+  shopinglist.value = !shopinglist.value;
+  isopen.value = false
+};
+
+
+
 </script>

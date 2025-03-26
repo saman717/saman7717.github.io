@@ -1,13 +1,22 @@
 <script setup>
+import SectionSubHaeder from './SectionSubHaeder.vue';
 import ShoppingCardIcon from '../../assets/shopingcard.svg';
-import arrowright from '../../assets/arrow-right-end-on-rectangle.svg';
-import { ref, onMounted, computed } from 'vue';
+import ArrowRightEndOnRectangle from '../../assets/ArrowRightEndOnRectangle.svg';
+import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import empty from '../../assets/empty.svg';
 import moon from '../../assets/moon.svg';
 import sun from '../../assets/sun.svg';
 import menu from "../../../menu.json"
-import { useAuthStore } from '../../store/auth'; // pinia auth
+import { useThemeStore } from "../../store/them"
+import { useAuthStore } from '../../store/auth';
+import { useCartStore } from "../../store/cartStore";
+
+const cartStore = useCartStore()
+
+
+const themeStore = useThemeStore();
+
 
 const items = ref(menu?.MenuItemsHeader ?? []);
 const products = ref([
@@ -24,18 +33,7 @@ const route = useRoute();
 const authStore = useAuthStore();  // user of state
 const isActive = (url) => route.path === url;
 
-const theme = ref(localStorage.getItem("theme") || "light");
-const toggleTheme = () => {
-  theme.value = theme.value === "light" ? "dark" : "light";
-  localStorage.setItem("theme", theme.value);
-  document.documentElement.classList.toggle("dark", theme.value === "dark");
-};
 
-onMounted(() => {
-  if (theme.value === "dark") {
-    document.documentElement.classList.add("dark");
-  }
-});
 
 
 const isAuthenticated = computed(() => authStore.user !== null);
@@ -47,7 +45,7 @@ const isAuthenticated = computed(() => authStore.user !== null);
 
 
 <template>
-  <header class="z-[5000] font-dana top-9 right-0 left-0 items-center w-[98%] lg:w-[90%] hidden md:flex h-24 
+  <header class="sticky z-[5000] font-dana top-9 right-0 left-0 items-center w-[98%] lg:w-[90%] hidden md:flex h-24 
      rounded-4xl mx-auto px-5 lg:px-10 py-5 bg-black/50 backdrop-blur-[6px] relative">
 
     <div class="flex relative items-center w-full justify-between">
@@ -91,7 +89,7 @@ const isAuthenticated = computed(() => authStore.user !== null);
                 class="absolute z-10 w-[400px] cursor-default top-full left-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible bg-white dark:bg-zinc-700 p-5 rounded-2xl border-t-[3px] transition-all delay-75 border-t-orange-300 shadow-normall">
                 <!-- header card sabad  -->
                 <div class="cursor-default flex items-center justify-between font-DanaMedium text-xs tracking-tighter">
-                  <span class="text-gray-300">{{ products.length }} مورد
+                  <span class="text-gray-300">{{ cartStore.cartItems.length }} مورد
                   </span>
                   <a href="#" class="flex text-orange-300 items-center text-base justify-center">
                     مشاهده سبد خرید
@@ -99,23 +97,30 @@ const isAuthenticated = computed(() => authStore.user !== null);
                   </a>
                 </div>
                 <!-- body card sabad -->
-                <div :class="{ 'h-[350px]': products.length > 2 }"
-                  class="border-b overflow-y-auto scrollbar-custom border-b-gray-300 dark:border-b-white/10 p-1 divide-y divide-gray-100 dark:divide-white/10 child:py-5">
+                <div :class="{ 'h-[350px]': cartStore.cartItems.length > 2 }"
+                  class="border-b overflow-y-auto scrollbar-custom border-b-gray-300 dark:border-b-white/10 pb-7 divide-y-2 divide-gray-100 dark:divide-white/10 child:py-6">
                   <!-- procces data and control -->
-                  <div v-if="products.length" v-for="(product, index) in products" :key="index" class="flex gap-x-2.5">
-                    <img :src="product.img" class="w-[120px] h-[120px]" alt="product1" />
+                  <div v-if="cartStore.cartItems.length" v-for="(product, index) in cartStore.cartItems" :key="index"
+                    class="flex mt-5 mb-5 gap-x-2.5 h-[165px] w-[343px] gap-6">
+                    <img :src="product.images" class="w-[120px] h-[120px] rounded-lg" alt="product1" />
                     <div class="flex flex-col justify-between">
-                      <h4 class="font-dana text-zinc-700 dark:text-white text-base line-clamp-2">
+                      <h4 class="font-dana text-zinc-700 w-[188px] dark:text-white text-base line-clamp-2">
                         {{ product.title }}
                       </h4>
-                      <div>
-                        <span class="text-teal-600 dark:text-emerald-500 text-xs font-DanaMedium tracking-tighter">
+                      <div class="mb-4 pl-6 flex items-center justify-between"> 
+                        <div class="flex-1">
+                          <span class="text-teal-600 dark:text-emerald-500 text-xs font-DanaMedium tracking-tighter">
                           {{ product.discount }} تومان تخفیف
-                        </span>
-                        <div class="text-zinc-700 dark:text-white tracking-wider font-DanaMedium">
+                          </span>
+                          <div class="text-zinc-700 dark:text-white tracking-wider font-DanaMedium">
                           {{ product.price }}
                           <span class="font-Dana">تومان</span>
+                          </div>
                         </div>
+                        <div class="flex-none rounded-2xl h-[40px] bg-orange-300 text-white w-15 flex items-center justify-center">
+                          <span class=""> +  </span> {{ product.quantity }} <span class="">   - </span>
+                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -147,8 +152,8 @@ const isAuthenticated = computed(() => authStore.user !== null);
             </div>
           </div>
           <!-- moon -->
-          <div @click="toggleTheme" class="cursor-pointer">
-            <moon v-if="theme === 'light'" class="h-8 w-9 text-orange-200 " />
+          <div @click="themeStore.toggleTheme" class="cursor-pointer">
+            <moon v-if="themeStore.theme === 'light'" class="h-8 w-9 text-orange-200 " />
             <sun v-else class="h-8 w-9 text-orange-200" />
           </div>
         </div>
@@ -158,32 +163,32 @@ const isAuthenticated = computed(() => authStore.user !== null);
         <!-- login Link   -->
         <div v-if="isAuthenticated">
           <div class="flex flex-col items-center gap-x-2.5">
-            <router-link to="/dashbord">
+            <router-link to="/dashbord" class="flex flex-col items-center gap-y-0.5">
               <img :src="authStore.user.avatar" alt="Profile Picture" class="h-8 w-8 rounded-full" />
               <span>{{ authStore.user.name }}</span>
-              
+
             </router-link>
-           
+
           </div>
         </div>
         <div v-if="!isAuthenticated" class="flex items-center justify-center gap-x-0.5">
           <RouterLink to="/login" class="flex items-center gap-x-2.5 tracking-tightest">
-            <arrowright class="h-8 w-9" />
-            <span class="hidden xl:inline-block">ورود    </span>
+            <ArrowRightEndOnRectangle class="h-8 w-9" />
+            <span class="hidden xl:inline-block">ورود </span>
           </RouterLink>
           <router-link to="/signup">
-            <span class="hidden xl:inline-block">  | ثبت نام </span>
-            
+            <span class="hidden xl:inline-block"> | ثبت نام </span>
+
           </router-link>
         </div>
 
       </div>
     </div>
   </header>
-  <div class="mt-[-100px] h-[500px] rounded-bl-[10%] rounded-br-[10%] flex flex-col items-center justify-center"
-    style="background-image: url('/src/assets/headerBgDesktop.webp'); background-size: cover; background-position: center;">
-    <h1 class="text-white text-4xl font-bold">به سایت ما خوش آمدید</h1>
-    <p class="text-white mt-2 font-danaDemiBold"> نبین الان خوب شده کونم زیر دیباگش پاره شده</p>
+
+  <div
+    class="mt-[50px] md:mt-[-110px] min-h-[300px] md:min-h-screen bg-[url('/src/assets/headerBgMobile.webp')] md:bg-[url('/src/assets/headerBgDesktop.webp')] rounded-bl-[10%] w-full rounded-br-[10%] bg-[length:100%_100%] bg-no-repeat flex flex-col">
+    <SectionSubHaeder />
   </div>
 
 </template>

@@ -8,11 +8,11 @@
       
       <nav class="p-4">
         <router-link 
-          to="/dashboard" 
+          to="/" 
           class="flex items-center p-3 mb-2 rounded-lg hover:bg-blue-700 transition-colors"
         >
           <span class="ml-2">🏠</span>
-          <span>پیشخوان</span>
+          <span>صفحه اصلی</span>
         </router-link>
         
         <router-link 
