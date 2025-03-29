@@ -9,7 +9,6 @@
           <div class="h-10 w-24 bg-gray-400 rounded"></div>
         </div>
       </div>
-
     </div>
   </template>
   

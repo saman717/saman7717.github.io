@@ -1,57 +1,35 @@
 <script setup>
-import SectionSubHaeder from './SectionSubHaeder.vue';
-import ShoppingCardIcon from '../../assets/shopingcard.svg';
-import ArrowRightEndOnRectangle from '../../assets/ArrowRightEndOnRectangle.svg';
 import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
-import empty from '../../assets/empty.svg';
-import moon from '../../assets/moon.svg';
-import sun from '../../assets/sun.svg';
-import menu from "../../../menu.json"
-import { useThemeStore } from "../../store/them"
-import { useAuthStore } from '../../store/auth';
-import { useCartStore } from "../../store/cartStore";
+import menu from "@/assets/static/menu.json";
+import { useThemeStore } from "@/store/them"
+import { useAuthStore } from '@/store/auth';
+import { useCartStore } from "@/store/cartStore";
+import SectionSubHaeder from './SectionSubHaeder.vue';
+import ShoppingCardIcon from '@/assets/svg/shopingcard.svg';
+import ArrowRightEndOnRectangle from '@/assets/svg/ArrowRightEndOnRectangle.svg';
+import empty from '@/assets/svg/empty.svg';
+import moon from '@/assets/svg/moon.svg';
+import sun from '@/assets/svg//sun.svg';
 
-const cartStore = useCartStore()
-
-
+const cartStore = useCartStore();
 const themeStore = useThemeStore();
-
-
 const items = ref(menu?.MenuItemsHeader ?? []);
-const products = ref([
-  // { id: "1", title: "قهوه اسپرسو بن مانو مدل پریسکا 250 گرمی", img: "./asset/products/p1.png", discount: "14,500", price: "175,000" },
-  // { id: "2", title: "چای سیاه ممتاز دارچین", img: "./asset/products/p2.png", discount: "10,000", price: "100,000" },
-  // { id: "3", title: "شکلات تلخ 85%", img: "./asset/products/p3.png", discount: "8,000", price: "80,000" },
-  // { id: "4", title: "دمنوش گل محمدی", img: "./asset/products/p4.png", discount: "5,000", price: "50,000" },
-  // { id: "5", title: "دمنوش گل محمدی", img: "./asset/products/p4.png", discount: "5,000", price: "50,000" },
-  // { id: "6", title: "دمنوش گل محمدی", img: "./asset/products/p4.png", discount: "5,000", price: "50,000" },
-  // { id: "7", title: "دمنوش گل محمدی", img: "./asset/products/p4.png", discount: "200,000", price: "1,200,000", }
-])
 const route = useRoute();
-
 const authStore = useAuthStore();  // user of state
 const isActive = (url) => route.path === url;
-
-
-
 
 const isAuthenticated = computed(() => authStore.user !== null);
 </script>
 
 
-
-
-
-
 <template>
   <header class="sticky z-[5000] font-dana top-9 right-0 left-0 items-center w-[98%] lg:w-[90%] hidden md:flex h-24 
-     rounded-4xl mx-auto px-5 lg:px-10 py-5 bg-black/50 backdrop-blur-[6px] relative">
-
+     rounded-4xl mx-auto px-5 lg:px-10 py-5 bg-black/50 backdrop-blur-[6px] ">
     <div class="flex relative items-center w-full justify-between">
       <nav class="flex items-center gap-x-5 lg:gap-x-9 h-14">
         <div class="shrink-0">
-          <img src="/src/assets/app-logo.png" alt="" />
+          <img src="/src/assets/images/img/app-logo.png" alt="" />
         </div>
         <!-- section menu bar -->
         <ul class="flex  items-center lg:gap-x-9 h-full text-gray-300">
@@ -61,7 +39,6 @@ const isAuthenticated = computed(() => authStore.user !== null);
               :class="{ 'text-orange-300': isActive(item.url), 'text-white': !isActive(item.url) }" class="p-1">
               {{ item.title }}
             </RouterLink>
-
             <!-- Submenu -->
             <div v-if="item.submenu && item.submenu.length"
               class="z-[6000]  top-full leading-normal opacity-0 invisible group-hover:visible group-hover:opacity-100 absolute tracking-normal space-y-4 p-6 w-52 bg-white dark:bg-zinc-800 dark:text-white shadow-normall text-zinc-700 rounded-2xl border-t-[3px] transition-all border-t-orange-300 child:inline-block child:transition-colors child-hover:text-orange-300">
@@ -74,7 +51,6 @@ const isAuthenticated = computed(() => authStore.user !== null);
             </div>
           </li>
         </ul>
-
       </nav>
       <!-- icons left -->
       <div class="flex text-orange-200 gap-x-4 lg:gap-x-5 xl:gap-x-9">
@@ -93,7 +69,6 @@ const isAuthenticated = computed(() => authStore.user !== null);
                   </span>
                   <a href="#" class="flex text-orange-300 items-center text-base justify-center">
                     مشاهده سبد خرید
-
                   </a>
                 </div>
                 <!-- body card sabad -->
@@ -107,22 +82,24 @@ const isAuthenticated = computed(() => authStore.user !== null);
                       <h4 class="font-dana text-zinc-700 w-[188px] dark:text-white text-base line-clamp-2">
                         {{ product.title }}
                       </h4>
-                      <div class="mb-4 pl-6 flex items-center justify-between"> 
+                      <div class="mb-4 pl-6 flex items-center justify-between">
                         <div class="flex-1">
                           <span class="text-teal-600 dark:text-emerald-500 text-xs font-DanaMedium tracking-tighter">
-                          {{ product.discount }} تومان تخفیف
+                            {{ product.discount }} تومان تخفیف
                           </span>
                           <div class="text-zinc-700 dark:text-white tracking-wider font-DanaMedium">
-                          {{ product.price }}
-                          <span class="font-Dana">تومان</span>
+                            {{ product.price }}
+                            <span class="font-Dana">تومان</span>
                           </div>
                         </div>
-                        <div class="gap-x-2 rounded-2xl h-[40px] bg-orange-300 justify-center text-white w-19 flex items-center">
-                         <button  @click="cartStore.increaseQuantity(product.id)"class="text-xl cursor-pointer">+</button>
-                         <p class="w-[22px] text-center ">{{ product.quantity }} </p>
-                         <button @click="cartStore.decreaseQuantity(product.id)" class="text-xl cursor-pointer">-</button>
+                        <div
+                          class="gap-x-2 rounded-2xl h-[40px] bg-orange-300 justify-center text-white w-19 flex items-center">
+                          <button @click="cartStore.increaseQuantity(product.id)"
+                            class="text-xl cursor-pointer">+</button>
+                          <p class="w-[22px] text-center ">{{ product.quantity }} </p>
+                          <button @click="cartStore.decreaseQuantity(product.id)"
+                            class="text-xl cursor-pointer">-</button>
                         </div>
-
                       </div>
                     </div>
                   </div>
@@ -133,7 +110,6 @@ const isAuthenticated = computed(() => authStore.user !== null);
                     <empty class="w-9 h-8" />
                   </div>
                 </div>
-
                 <!-- footer card sabad -->
                 <div class="flex justify-between mt-5">
                   <div class="">
@@ -161,16 +137,13 @@ const isAuthenticated = computed(() => authStore.user !== null);
         </div>
         <!-- divide boedder  -->
         <span class="block w-px h-14 bg-white/20"></span>
-
         <!-- login Link   -->
         <div v-if="isAuthenticated">
           <div class="flex flex-col items-center gap-x-2.5">
             <router-link to="/dashbord" class="flex flex-col items-center gap-y-0.5">
               <img :src="authStore.user.avatar" alt="Profile Picture" class="h-8 w-8 rounded-full" />
               <span>{{ authStore.user.name }}</span>
-
             </router-link>
-
           </div>
         </div>
         <div v-if="!isAuthenticated" class="flex items-center justify-center gap-x-0.5">
@@ -180,24 +153,16 @@ const isAuthenticated = computed(() => authStore.user !== null);
           </RouterLink>
           <router-link to="/signup">
             <span class="hidden xl:inline-block"> | ثبت نام </span>
-
           </router-link>
         </div>
-
       </div>
     </div>
   </header>
-
   <div
-    class="mt-[50px] md:mt-[-110px] min-h-[300px] md:min-h-screen bg-[url('/src/assets/headerBgMobile.webp')] md:bg-[url('/src/assets/headerBgDesktop.webp')] rounded-bl-[10%] w-full rounded-br-[10%] bg-[length:100%_100%] bg-no-repeat flex flex-col">
+    class="mt-[50px] md:mt-[-110px] min-h-[300px] md:min-h-screen bg-[url('/src/assets/svg/headerBgMobile.webp')] md:bg-[url('/src/assets/svg/headerBgDesktop.webp')] rounded-bl-[10%] w-full rounded-br-[10%] bg-[length:100%_100%] bg-no-repeat flex flex-col">
     <SectionSubHaeder />
   </div>
-
 </template>
-
-
-
-
 
 
 <style>

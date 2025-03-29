@@ -1,35 +1,13 @@
-<template>
-  <div class="relative bg-blue-400 rounded-2xl m-4">
-    <div class="m-1 relative w-[98%] lg:w-[90%] mx-auto swiper-container overflow-hidden" ref="swiperContainer">
-
-      <div class="swiper-wrapper">
-        <div 
-          v-for="(product, index) in products.slice(0,10)" 
-          :key="index" 
-          class="swiper-slide">
-              <cardproduct :product="product" />
-        </div>
-  
-      </div>
-        <div class="absolute swiper-button-next" ref="nextBtn"></div>
-          <div class="absolute  swiper-button-prev" ref="prevBtn"></div>
-
-          <div div class="swiper-pagination"></div>
-
-
-      </div>
-    
-  </div>
-  
-</template>
-
-  
-  <script setup>
- import { ref, onMounted } from 'vue';
+<script setup>
+import { ref, onMounted } from 'vue';
 import { Swiper } from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 import cardproduct from './cardproduct.vue';
+
+const swiperContainer = ref(null);
+const nextBtn = ref(null);
+const prevBtn = ref(null);
 
 const props = defineProps({
   products: {
@@ -38,9 +16,6 @@ const props = defineProps({
   },
 });
 
-const swiperContainer = ref(null);
-const nextBtn = ref(null);
-const prevBtn = ref(null);
 
 onMounted(() => {
   new Swiper(swiperContainer.value, {
@@ -73,13 +48,30 @@ onMounted(() => {
   });
 });
 
-  </script>
-  
-  <style scoped>
+</script>
+
+<template>
+  <div class="relative bg-blue-400 rounded-2xl m-4">
+    <div class="m-1 relative w-[98%] lg:w-[90%] mx-auto swiper-container overflow-hidden" ref="swiperContainer">
+      <div class="swiper-wrapper">
+        <div v-for="(product, index) in products.slice(0, 10)" :key="index" class="swiper-slide">
+          <cardproduct :product="product" />
+        </div>
+      </div>
+      <div class="absolute swiper-button-next" ref="nextBtn"></div>
+      <div class="absolute  swiper-button-prev" ref="prevBtn"></div>
+      <div div class="swiper-pagination"></div>
+    </div>
+  </div>
+</template>
+
+
+<style scoped>
 .swiper-container {
   padding: 20px 0;
-  position: static;  /* change of realtive to static*/
-    z-index: auto; 
+  position: static;
+  /* change of realtive to static*/
+  z-index: auto;
   border-radius: 10px;
 }
 
@@ -88,8 +80,9 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
-  position: relative; 
-  z-index: 1; /* card product not fron of menu*/
+  position: relative;
+  z-index: 1;
+  /* card product not fron of menu*/
 }
 
 .swiper-button-next,
@@ -103,9 +96,8 @@ onMounted(() => {
   top: 40%;
 
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 10; 
+  z-index: 10;
 }
-
 .swiper-button-next::after,
 .swiper-button-prev::after {
   font-size: 20px;

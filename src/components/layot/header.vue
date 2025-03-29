@@ -4,7 +4,6 @@ import HeaderMobile from './HeaderMobile.vue';
 </script>
 
 <template>
-  <HeaderMobile/>
-  <HeaderDesktop/>
-  
+  <HeaderMobile />
+  <HeaderDesktop />
 </template>

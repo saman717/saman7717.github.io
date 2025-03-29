@@ -1,3 +1,8 @@
+<script setup>
+import curve from "@/assets/svg/curve.svg"
+import chavronDown from "@/assets/svg/chavronDown.svg"
+</script>
+
 <template>
     <section class="home relative  ">
         <div
@@ -10,9 +15,6 @@
                 <p class="max-w-[201px] font-MorabbaLight md:max-w-[460px] text-xs md:text-2xl "> قطعا نام آشنای عربکا
                     را شنیده اید، عربیکا یکی از گونه های قهوه ایت که در نواحی مختلف کمربند قهوه کشت می شود</p>
             </div>
-
-
-
             <div
                 class="circle absolute top-0 left-0 right-0  -bottom-85 md:-bottom-7533333333333333333333333333  md:translate-y-full translate-y-0 m-auto circle--lg">
                 <div class="circle circle--md">
@@ -20,19 +22,11 @@
                 </div>
             </div>
         </div>
-
         <curve class="absolute -bottom-1 md:bottom-0 right-0 left-0 m-auto text-white dark:text-zinc-700" />
         <div
             class=" absolute bottom-0 right-0 left-0 m-auto w-[30px] h-[30px] translate-y-3.5  rounded-full border-2 flex items-center justify-center border-orange-300">
             <chavronDown class="text-zinc-700 dark:text-white w-4 h-4" />
         </div>
-
     </section>
-
 </template>
 
-<script setup>
-import curve from "../../assets/curve.svg"
-import chavronDown from "../../assets/chavronDown.svg"
-
-</script>

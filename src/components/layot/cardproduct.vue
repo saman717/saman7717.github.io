@@ -1,3 +1,33 @@
+<script setup>
+import { defineProps, ref } from "vue";
+import shopingcard from "@/assets/svg/shopingcard.svg";
+import ArrowsRightLeft from "@/assets/svg/ArrowsRightLeft.svg";
+import star from "@/assets/svg/star.svg";
+import defaultImage from "@/assets/images/img/p1.png"
+import { useCartStore } from "@/store/cartStore";
+
+const cartStore = useCartStore();
+
+const addToCart = () => {
+  cartStore.addToCart(props.product);
+  console.log(cartStore.cartItems);
+};
+
+const props = defineProps({
+  product: Object,
+});
+
+// Select the first product image or display the default image
+const productImage = ref(props.product?.images?.[0] || defaultImage);
+
+const handleImageError = () => {
+  productImage.value = defaultImage;
+};
+
+</script>
+
+
+
 <template>
   <div
     class="flex items-center justify-center rounded-xl  container hover:scale-102 transition-all duration-300  ">
@@ -52,34 +82,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { defineProps, ref } from "vue";
-import shopingcard from "../../assets/shopingcard.svg";
-import ArrowsRightLeft from "../../assets/ArrowsRightLeft.svg";
-import star from "../../assets/star.svg";
-import defaultImage from "../../assets/p1.png"
-import { useCartStore } from "../../store/cartStore";
-
-const cartStore = useCartStore();
-
-const addToCart = () => {
-  cartStore.addToCart(props.product);
-  console.log(cartStore.cartItems);
-};
-
-const props = defineProps({
-  product: Object,
-});
-
-// انتخاب اولین تصویر محصول یا نمایش تصویر پیش‌فرض
-const productImage = ref(props.product?.images?.[0] || defaultImage);
-
-const handleImageError = () => {
-  productImage.value = defaultImage;
-};
-
-
-
-
-</script>

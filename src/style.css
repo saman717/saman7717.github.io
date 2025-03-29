@@ -35,7 +35,7 @@
 
 @font-face {
   font-family: "Morabba Bold";
-  src: url("/src/assets/font/morabba/Morabba-Bold.woff") format("woff2");
+  src: url("/src/assets/font/morabba/Morabba-Bold.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
@@ -118,82 +118,81 @@
     scrollbar-color: #fdba74 #3f3f46;
   }
   .scrollbar-custom {
-    max-height: calc(100vh - 10rem); /* جلوگیری از ورود اسکرول به زیر فوتر */
+    max-height: calc(100vh - 10rem); /* Prevent scrollbar from overlapping footer */
     overflow-y: auto;
-    padding-bottom: 4rem; /* ایجاد فضای اضافی برای جلوگیری از هم‌پوشانی */
-    scrollbar-width: thin; /* برای فایرفاکس */
-    scrollbar-color: #fdba74 #fff; /* رنگ اسکرول */
-  }
-  
-  /* اسکرول بار برای مرورگرهای مبتنی بر Webkit (کروم، سافاری، اج جدید) */
-  .scrollbar-custom::-webkit-scrollbar {
-    width: 8px; /* عرض اسکرول بار */
-    height: 1px; /* برای اسکرول افقی */
-  }
-  
-  /* پس‌زمینه نوار اسکرول */
-  .scrollbar-custom::-webkit-scrollbar-track {
+    padding-bottom: 4rem; /* Extra space to avoid overlap */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #fdba74 #fff; /* Scrollbar colors */
+}
+
+/* Scrollbar styles for Webkit-based browsers (Chrome, Safari, Edge) */
+.scrollbar-custom::-webkit-scrollbar {
+    width: 8px; /* Scrollbar width */
+    height: 1px; /* For horizontal scrolling */
+}
+
+/* Scrollbar track background */
+.scrollbar-custom::-webkit-scrollbar-track {
     background: #fffefe;
     border-radius: 4px;
-  }
-  
-  /* رنگ و استایل دسته (thumb) اسکرول */
-  .scrollbar-custom::-webkit-scrollbar-thumb {
-    background: rgb(240, 2, 2); /* رنگ اصلی */
+}
+
+/* Scrollbar thumb (handle) styling */
+.scrollbar-custom::-webkit-scrollbar-thumb {
+    background: rgb(240, 2, 2); /* Main color */
     border-radius: 10px;
     transition: background 0.3s ease-in-out;
-  }
-  
-  /* تغییر رنگ هنگام هاور روی اسکرول */
-  .scrollbar-custom::-webkit-scrollbar-thumb:hover {
-    background: #d00; /* رنگ تیره‌تر هنگام هاور */
-  }
-  
-  /* مخفی کردن دکمه‌های بالا و پایین اسکرول */
-  .scrollbar-custom::-webkit-scrollbar-button {
-    display: none;
-  }
+}
 
-  /* scrollar desktop style */
-  html.dark .scrolldesktop{
+/* Change scrollbar thumb color on hover */
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+    background: #d00; /* Darker shade on hover */
+}
+
+/* Hide scrollbar buttons (up/down arrows) */
+.scrollbar-custom::-webkit-scrollbar-button {
+    display: none;
+}
+
+/* Scrollbar styling for desktop */
+html.dark .scrolldesktop {
     scrollbar-color: #fdba74 #3f3f46;
-  }
+}
+
 .scrolldesktop {
-    max-height: calc(100vh - 10rem); /* جلوگیری از ورود اسکرول به زیر فوتر */
+    max-height: calc(100vh - 10rem); /* Prevent scrollbar from overlapping footer */
     overflow-y: auto;
-    padding-bottom: 4rem; /* ایجاد فضای اضافی برای جلوگیری از هم‌پوشانی */
-    scrollbar-width: thin; /* برای فایرفاکس */
-    scrollbar-color: #fdba74 #fff; /* رنگ اسکرول */
-  }
-  
-  /* اسکرول بار برای مرورگرهای مبتنی بر Webkit (کروم، سافاری، اج جدید) */
+    padding-bottom: 4rem; /* Extra space to avoid overlap */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #fdba74 #fff; /* Scrollbar colors */
+}
+
+/* Scrollbar styles for Webkit-based browsers (Chrome, Safari, Edge) */
 .scrolldesktop::-webkit-scrollbar {
-    width: 8px; /* عرض اسکرول بار */
-    height: 1px; /* برای اسکرول افقی */
-  }
-  
-  /* پس‌زمینه نوار اسکرول */
+    width: 8px; /* Scrollbar width */
+    height: 1px; /* For horizontal scrolling */
+}
+
+/* Scrollbar track background */
 .scrolldesktop::-webkit-scrollbar-track {
     background: #fffefe;
     border-radius: 4px;
-  }
-  
-  /* رنگ و استایل دسته (thumb) اسکرول */
+}
+
+/* Scrollbar thumb (handle) styling */
 .scrolldesktop::-webkit-scrollbar-thumb {
-    background: rgb(240, 2, 2); /* رنگ اصلی */
+    background: rgb(240, 2, 2); /* Main color */
     border-radius: 10px;
     transition: background 0.3s ease-in-out;
-  }
-  
-  /* تغییر رنگ هنگام هاور روی اسکرول */
+}
+
+/* Change scrollbar thumb color on hover */
 .scrolldesktop::-webkit-scrollbar-thumb:hover {
-    background: #d00; /* رنگ تیره‌تر هنگام هاور */
-  }
-  
-  /* مخفی کردن دکمه‌های بالا و پایین اسکرول */
+    background: #d00; /* Darker shade on hover */
+}
+
+/* Hide scrollbar buttons (up/down arrows) */
 .scrolldesktop::-webkit-scrollbar-button {
     display: none;
-  }
-  
-  
+}
 }
