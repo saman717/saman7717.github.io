@@ -5,6 +5,9 @@ import router from "./router"
 import { createPinia } from "pinia"
 
 const app = createApp(App);
-app.use(createPinia()); // فعال کردن Pinia
-app.use(router); // اگر Router داری
+const pinia = createPinia();
+
+// Using Pinia correctly
+app.use(pinia);  
+app.use(router); // Add router after pinia
 app.mount("#app");
