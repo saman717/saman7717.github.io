@@ -5,6 +5,7 @@ import dashbord from '../pages/dashbord.vue';
 import Home from '../pages/Home.vue';
 import VerifyEmail from '../pages/VerifyEmail.vue';
 import profile from '../pages/profile.vue';
+import card from '../pages/card.vue';
 
 const routes = [
   {
@@ -12,6 +13,13 @@ const routes = [
     name: 'login',
     component: login,
     meta: { showHeader: false },
+  },
+
+  {
+    path:'/card',
+    name:'card',
+    component: card,
+    meta:{showHeader:true}
   },
   {
     path: '/signup',
