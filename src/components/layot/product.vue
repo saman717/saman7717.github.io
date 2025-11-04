@@ -25,7 +25,7 @@ defineProps({
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-y-4   lg:grid-cols-4 ">
+            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <cardproduct v-for="(product, index) in products.slice(10, 18)" :key="index" :product="product" />
             </div>
         </div>

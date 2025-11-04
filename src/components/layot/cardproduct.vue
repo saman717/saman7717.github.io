@@ -34,8 +34,7 @@ const handleImageError = () => {
 <template>
 <div class="flex items-center justify-center rounded-xl container hover:scale-102 transition-all duration-300 ">
   <div
-    class="md:w-[270px] md:h-[430px] w-[270px] h-[347px] bg-white dark:bg-zinc-800 rounded-2xl p-2 border border-gray-200 dark:border-zinc-700 shadow-md hover:shadow-lg transition-all duration-300"
-  >
+    class="md:w-[270px] md:h-[430px] w-[270px] h-[347px] bg-white dark:bg-zinc-800 rounded-2xl p-2 border border-gray-200 dark:border-zinc-700 shadow-md hover:shadow-lg transition-all duration-300">
     <div class="relative rounded-2xl overflow-hidden">
       <img
         class="rounded-t-2xl w-full h-[200px] md:h-[250px] object-cover"
@@ -79,12 +78,12 @@ const handleImageError = () => {
         </div>
       </div>
 
-      <div class="flex items-center gap-x-0.5 text-white/60 dark:text-white">
+      <div class="flex items-center gap-x-0.5 text-black dark:text-white">
         <star class="w-4 h-4 text-orange-300" fill="oklch(0.837 0.128 66.29)" />
         <star class="w-4 h-4 text-orange-300" fill="oklch(0.837 0.128 66.29)" />
         <star class="w-4 h-4 text-orange-300" fill="oklch(0.837 0.128 66.29)" />
-        <star class="w-4 h-4" />
-        <star class="w-4 h-4" />
+        <star class="w-4 h-4"  />
+        <star class="w-4 h-4  "  />
       </div>
     </div>
   </div>

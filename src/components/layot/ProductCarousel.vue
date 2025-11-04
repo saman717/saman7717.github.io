@@ -1,130 +1,105 @@
 <script setup>
-import { onMounted, nextTick } from 'vue';
-import Swiper from 'swiper';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import 'swiper/swiper-bundle.css';
-import cardproduct from './cardproduct.vue';
+import { ref } from "vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Navigation, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+
+import cardproduct from "./cardproduct.vue";
 
 const props = defineProps({
-  products: {
-    type: Array,
-    required: true,
-  },
+  products: Array,
 });
 
-onMounted(async () => {
-  await nextTick();
+// دکمه‌ها و نمونه اسلایدر
+const nextButton = ref(null);
+const prevButton = ref(null);
+const swiperInstance = ref(null);
 
-  setTimeout(() => {
-    new Swiper('.swiper-container', {
-      modules: [Navigation, Pagination, Autoplay],
-      loop: true,
-      slidesPerView: 4,
-      spaceBetween: 30,
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-      },
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      breakpoints: {
-        320: {
-          slidesPerView: 1,
-          spaceBetween: 10,
-        },
-        768: {
-          slidesPerView: 2,
-          spaceBetween: 20,
-        },
-        1024: {
-          slidesPerView: 4,
-          spaceBetween: 30,
-        },
-      },
-    });
+const onSwiper = (swiper) => {
+  swiperInstance.value = swiper;
 
-    console.log("تمام داده‌ها دریافت شدند و اسلایدر آماده است.");
-  }, 100);
-});
+  // اتصال navigation بعد از mount کامل
+  swiper.params.navigation.prevEl = prevButton.value;
+  swiper.params.navigation.nextEl = nextButton.value;
+  swiper.navigation.init();
+  swiper.navigation.update();
+};
 </script>
 
 <template>
-  <div class="relative bg-white dark:bg-zinc-900 p-6 rounded-xl container lg:p-20">
+  <div class="relative bg-white dark:bg-zinc-900 p-6 lg:p-12 rounded-xl">
 
-    <!-- دکمه‌های ناوبری بالا کنار هم -->
-    <div class="flex justify-end items-center gap-x-3 mb-6">
-      <div class="swiper-button-prev custom-nav-btn"></div>
-      <div class="swiper-button-next custom-nav-btn"></div>
+    <!-- دکمه‌های ناوبری -->
+    <div class="flex justify-end items-center gap-3 mb-6">
+      <button ref="prevButton" class="nav-btn">‹</button>
+      <button ref="nextButton" class="nav-btn">›</button>
     </div>
 
-    <!-- اسلایدر -->
-    <div class="swiper-container overflow-hidden">
-      <div class="swiper-wrapper">
-        <div
-          v-for="(product, index) in products"
-          :key="index"
-          class="swiper-slide"
-        >
-          <cardproduct :product="product" />
-        </div>
-      </div>
-    </div>
+    <!-- اسلایدر محصولات -->
+    <Swiper
+      v-if="products && products.length"
+      :modules="[Navigation, Autoplay]"
+      :loop="true"
+      :slides-per-view="4"
+      :space-between="30"
+      :autoplay="{ delay: 3000, disableOnInteraction: false }"
+      :allow-touch-move="true"
+      :simulate-touch="true"
+      :grab-cursor="true"
+      @swiper="onSwiper"
+      :breakpoints="{
+        320: { slidesPerView: 1, spaceBetween: 10 },
+        576: { slidesPerView: 2, spaceBetween: 15 },
+        768: { slidesPerView: 2.5, spaceBetween: 20 },
+        1024: { slidesPerView: 3, spaceBetween: 25 },
+        1280: { slidesPerView: 4, spaceBetween: 30 }
+      }"
+      class="swiper-main"
+    >
+      <SwiperSlide
+        v-for="(product, index) in products"
+        :key="index"
+        class="slide-item"
+      >
+        <cardproduct :product="product" />
+      </SwiperSlide>
+    </Swiper>
 
   </div>
 </template>
 
 <style scoped>
-.swiper-container {
-  padding: 20px 0;
-  position: static;
-  z-index: auto;
-  border-radius: 10px;
+.swiper-main {
+  width: 100%;
+  height: auto;
+  padding-bottom: 15px;
 }
 
-.swiper-slide {
+.slide-item {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
-  position: relative;
-  z-index: 1;
 }
 
-/* دکمه‌های ناوبری */
-.swiper-button-next,
-.swiper-button-prev {
-  position: static; /* خیلی مهم */
-  color: #fff;
+.nav-btn {
   background: #fb923c;
-  width: 40px;
-  height: 40px;
+  color: #fff;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
+  font-size: 22px;
   display: flex;
   justify-content: center;
   align-items: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-}
-
-/* آیکون فلش داخل دکمه */
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  font-size: 20px;
-}
-
-/* افکت هاور برای دکمه‌ها */
-.swiper-button-next:hover,
-.swiper-button-prev:hover {
-  background: #f97316; /* رنگ نارنجی روشن‌تر */
-  transform: scale(1.1);
   transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.nav-btn:hover {
+  background: #f97316;
+  transform: scale(1.1);
 }
 </style>
-
-

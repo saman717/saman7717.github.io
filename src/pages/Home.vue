@@ -37,19 +37,19 @@ onMounted(() => {
     <div class="">
       <!-- <ProductCarousel v-if="!isLoading" :products="products" /> -->
       <product v-if="!isLoading" :products="products" />
-      <div v-else class="grid grid-cols-2 lg:grid-cols-4 lg:p-20 container ">
+      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-4 sm:p-8 lg:p-20">
         <CardSkeleton v-for="n in 8" :key="n" />
       </div>
 
       <BanerHomPage v-if="!isLoading" class="mt-40" />
-      <BanerHomePage v-else class=""/>
+      <BanerHomePage v-else class="" />
 
       <CategoryProductSection />
-      <ProductCarousel :products="products.slice(0,20)"/>
+      <ProductCarousel :products="products.slice(0, 20)" />
 
-      <CofeeClube/>
+      <CofeeClube />
 
-      <TextAD/>
+      <TextAD />
 
 
     </div>
