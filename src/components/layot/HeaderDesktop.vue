@@ -10,7 +10,8 @@ import ShoppingCardIcon from '@/assets/svg/shopingcard.svg';
 import ArrowRightEndOnRectangle from '@/assets/svg/ArrowRightEndOnRectangle.svg';
 import empty from '@/assets/svg/empty.svg';
 import moon from '@/assets/svg/moon.svg';
-import sun from '@/assets/svg//sun.svg';
+import sun from '@/assets/svg/sun.svg';
+
 
 const cartStore = useCartStore();
 const themeStore = useThemeStore();
@@ -24,7 +25,7 @@ const isAuthenticated = computed(() => authStore.user !== null);
 
 
 <template>
-  <header class="sticky z-[5000] font-dana top-9 right-0 left-0 items-center w-[98%] lg:w-[90%] hidden md:flex h-24 
+  <header class="relative z-[5000] font-dana top-9 right-0 left-0 items-center w-[98%] lg:w-[90%] hidden md:flex h-24 
      rounded-4xl mx-auto px-5 lg:px-10 py-5 bg-black/50 backdrop-blur-[6px] ">
     <div class="flex relative items-center w-full justify-between">
       <nav class="flex items-center gap-x-5 lg:gap-x-9 h-14">
@@ -162,6 +163,7 @@ const isAuthenticated = computed(() => authStore.user !== null);
     class="mt-[50px] md:mt-[-110px] min-h-[300px] md:min-h-screen bg-[url('/src/assets/svg/headerBgMobile.webp')] md:bg-[url('/src/assets/svg/headerBgDesktop.webp')] rounded-bl-[10%] w-full rounded-br-[10%] bg-[length:100%_100%] bg-no-repeat flex flex-col">
     <SectionSubHaeder />
   </div>
+  
 </template>
 
 

@@ -111,8 +111,9 @@
     }
   }
   html.dark{
-    background: #3f3f46;
+    background: #18181b;
   }
+  
 
   html.dark .scrollbar-custom{
     scrollbar-color: #fdba74 #3f3f46;

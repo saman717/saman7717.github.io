@@ -14,7 +14,7 @@ watch(() => route.path, () => {
 
 
 <template>
-  <div class="dark:bg-zinc-700">
+  <div class=  " bg-white/20 dark:bg-zinc-900">
     <!-- نمایش هدر فقط در صورتی که meta showHeader برابر با true باشد -->
     <Header v-if="showHeader"/>
     <router-view />

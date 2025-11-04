@@ -13,5 +13,19 @@
             {"id":4 ,"title": "بلاگ", "url":"/Dlogs","submenu": []},
             {"id":5 ,"title": "درباره ما ", "url":"/About","submenu": []},
             {"id":6 ,"title": "تماس با ما", "url":"/CallsUs","submenu": []}
+        ],
+        "category":[
+            {"id":10 , "title":"پودر قهوه " , "image":"/src/assets/images/img/category1.png" },
+            {"id":11 , "title":"لوازم جانبی " , "image":"/src/assets/images/img/category2.png" },
+            {"id":12 , "title":"اسپرسو ساز" , "image":"/src/assets/images/img/category3.png" },
+            {"id":13 , "title":"بلک قهوه " , "image":"/src/assets/images/img/category4.png" },
+            {"id":14 , "title":"قوه ترک" , "image":"/src/assets/images/img/category5.png" }
+
+        ],
+        "Article":[
+            {"id":200,"date":"29 مرداد 1402", "title":"طرز تهیه قهوه با دمی با دستگاه اروپزس", "discription":"فهوه میواتد باعث مختل شدن کیفیت خواب شود و باید قهوه را ماتا قبل از ساهت 12 مصرف کنیم تا بتونیم خوابی عالی و استراحت مناسبی را در شب تجربه کنیم ", "image":"/src/assets/images/img/blog-1.png"},
+            {"id":201, "date":"29 مرداد 1402", "title":"طرز تهیه قهوه با دمی با دستگاه اروپزس", "discription":"فهوه میواتد باعث مختل شدن کیفیت خواب شود و باید قهوه را ماتا قبل از ساهت 12 مصرف کنیم تا بتونیم خوابی عالی و استراحت مناسبی را در شب تجربه کنیم ", "image":"/src/assets/images/img/blog-2.png"},
+            {"id":202, "date":"29 مرداد 1402",  "title":"طرز تهیه قهوه با دمی با دستگاه اروپزس", "discription":"فهوه میواتد باعث مختل شدن کیفیت خواب شود و باید قهوه را ماتا قبل از ساهت 12 مصرف کنیم تا بتونیم خوابی عالی و استراحت مناسبی را در شب تجربه کنیم ", "image":"/src/assets/images/img/blog-3.png"},
+            {"id":203, "date":"29 مرداد 1402", "title":"طرز تهیه قهوه با دمی با دستگاه اروپزس", "discription":"فهوه میواتد باعث مختل شدن کیفیت خواب شود و باید قهوه را ماتا قبل از ساهت 12 مصرف کنیم تا بتونیم خوابی عالی و استراحت مناسبی را در شب تجربه کنیم ", "image":"/src/assets/images/img/blog-4.png"}
         ]
     }
