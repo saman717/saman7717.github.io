@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref } from 'vue';
 import { useThemeStore } from "../../store/them"
 import { useCartStore } from "../../store/cartStore";
 import menu from "@/assets/static/menu.json";
@@ -48,9 +48,21 @@ const ToggleShopingMobile = () => {
       <logo class="w-[100px] h-10 text-orange-300" />
     </div>
     <!-- SHOP LOGO   -->
-    <div>
-      <shopingcard class="w-6 h-6 dark:text-white cursor-pointer" @click="ToggleShopingMobile" />
+    <div class="">
+      <div class="">
+        <div class="absolute">
+
+          <shopingcard class=" w-6 h-6 dark:text-white cursor-pointer" @click="ToggleShopingMobile" />
+        </div>
+        <div
+          class="relative -top-2 -right-2 w-[18px] h-[18px] bg-red-600 text-white text-[12px] font-dana rounded-full flex items-center justify-center">
+          {{ cartStore.cartItems.length }}
+        </div>
+
+      </div>
+
     </div>
+
     <!-- side menu right -->
     <div v-if="isopen" v-cloak
       class="fixed overflow-auto  top-0 right-0 bottom-0 w-64 min-h-screen bg-white dark:bg-zinc-700 pt-3 px-4 transform transime"
@@ -113,10 +125,10 @@ const ToggleShopingMobile = () => {
           </span>
         </div>
         <div class="inline-block mb-15">
-          <a class="inline-flex gap-x-1 text-orange-300" href=" #">
-            <shopingcard class="w-6 h-6 text-orange-300"  />
+          <router-link to="/card" class="inline-flex gap-x-1 text-orange-300">
+            <shopingcard class="w-6 h-6 text-orange-300" />
             سبد خرید
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -125,7 +137,7 @@ const ToggleShopingMobile = () => {
       class="fixed top-0  left-0 bottom-0 w-[75%] max-h-screen bg-white pt-3 px-4 dark:bg-zinc-700 flex flex-col">
       <div class="h-16 flex items-center justify-between border-b border-gray-300 dark:border-white/10">
         <xmark class="cursor-pointer w-6 h-6 dark:text-white" @click="ToggleShopingMobile" />
-        <a href="#" class="font-danaDemiBold dark:text-white "> سبد خرید </a>
+        <router-link to="/card" class="font-danaDemiBold dark:text-white ">سبد خرید </router-link>
       </div>
       <div class="flex-grow overflow-y-auto scrollbar-custom  p-1 divide-y divide-gray-100 dark:divide-white/10">
         <div v-if="cartStore.cartItems.length" v-for="(product, index) in cartStore.cartItems" :key="index"
@@ -155,12 +167,14 @@ const ToggleShopingMobile = () => {
             </div>
           </div>
         </div>
-        <div v-else class="flex flex-col items-center justify-center h-full text-center font-DanaMedium text-gray-500 dark:text-white">
+        <div v-else
+          class="flex flex-col items-center justify-center h-full text-center font-DanaMedium text-gray-500 dark:text-white">
           <p class="">محصولی برای نمایش وجود ندارد</p>
           <empty class="w-10 h-10 text-gray-600 dark:text-white" />
         </div>
       </div>
-      <div class="h-16 bg-white dark:bg-zinc-700 absolute bottom-0 right-0 left-0 flex items-center justify-between px-4 border-t border-gray-300 dark:border-white/10">
+      <div
+        class="h-16 bg-white dark:bg-zinc-700 absolute bottom-0 right-0 left-0 flex items-center justify-between px-4 border-t border-gray-300 dark:border-white/10">
         <div v-if="cartStore.cartItems.length > 0">
           <span class="text-zinc-700 dark:text-white tracking-wider font-DanaMedium">
             {{ cartStore.totalPrice }}
@@ -177,5 +191,3 @@ const ToggleShopingMobile = () => {
     </div>
   </div>
 </template>
-
-

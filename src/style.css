@@ -159,6 +159,8 @@ html.dark .scrolldesktop {
     scrollbar-color: #fdba74 #3f3f46;
 }
 
+
+
 .scrolldesktop {
     max-height: calc(100vh - 10rem); /* Prevent scrollbar from overlapping footer */
     overflow-y: auto;
@@ -195,4 +197,62 @@ html.dark .scrolldesktop {
 .scrolldesktop::-webkit-scrollbar-button {
     display: none;
 }
+}
+
+
+
+
+
+
+/* تغییر نام کلاس اصلی */
+.scrollbarcard {
+  max-height: calc(100vh - 10rem);
+  overflow-y: auto;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: #fdba74 #3f3f46; /* فقط رنگ‌ها تغییر کرده */
+}
+
+/* استایل برای حالت تاریک */
+.dark .scrollbarcard {
+  scrollbar-color: #fdba74 #fff; /* پس‌زمینه اسکرولبار تاریک: #1f2937 */
+  
+}
+
+/* استایل برای حالت روشن */
+.light .scrollbarcard {
+  scrollbar-color: #fff #3f3f46; /* پس‌زمینه اسکرولبار روشن: #e5e7eb (zin700) */
+}
+
+/* استایل‌های وبکیت (بدون تغییر) */
+.scrollbarcard::-webkit-scrollbar {
+  width: 10px;
+  height: 0px;
+}
+
+.scrollbarcard::-webkit-scrollbar-track {
+  background: #3f3f46; /* پیش‌فرض برای حالت روشن */
+  border-radius: 4px;
+}
+
+.dark .scrollbarcard::-webkit-scrollbar-track {
+  background: #3f3f46; /* پس‌زمینه تاریک */
+}
+
+.light .scrollbarcard::-webkit-scrollbar-track {
+  background: #3f3f46 ; /* پس‌زمینه روشن (#zin700) */
+}
+
+.scrollbarcard::-webkit-scrollbar-thumb {
+  background: #fdba74;
+  border-radius: 10px;
+  transition: background 0.3s ease-in-out;
+}
+
+.scrollbarcard::-webkit-scrollbar-thumb:hover {
+  background: #dc2626;
+}
+
+.scrollbarcard::-webkit-scrollbar-button {
+  display: none;
 }
