@@ -4,13 +4,16 @@ import shopingcard from "@/assets/svg/shopingcard.svg";
 import ArrowsRightLeft from "@/assets/svg/ArrowsRightLeft.svg";
 import star from "@/assets/svg/star.svg";
 import defaultImage from "@/assets/images/img/p1.png"
+
 import { useCartStore } from "@/store/cartStore";
 
 const cartStore = useCartStore();
 
+
 const addToCart = () => {
   cartStore.addToCart(props.product);
   console.log(cartStore.cartItems);
+
 };
 
 const props = defineProps({
