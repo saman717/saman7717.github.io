@@ -24,7 +24,7 @@ const isAuthenticated = computed(() => authStore.user !== null);
 
 
 <template>
-  <header class="sticky z-[5000] font-dana top-9 right-0 left-0 items-center w-[98%] lg:w-[90%] hidden md:flex h-24 
+  <header class="relative z-[5000] font-dana top-9 right-0 left-0 items-center w-[98%] lg:w-[90%] hidden md:flex h-24 
      rounded-4xl mx-auto px-5 lg:px-10 py-5 bg-black/50 backdrop-blur-[6px] ">
     <div class="flex relative items-center w-full justify-between">
       <nav class="flex items-center gap-x-5 lg:gap-x-9 h-14">
@@ -58,8 +58,17 @@ const isAuthenticated = computed(() => authStore.user !== null);
         <div class="flex gap-x-4 lg:gap-x-5 items-center">
           <!-- store -->
           <div class="">
-            <div class="py-3 relative group cursor-pointer ">
-              <ShoppingCardIcon class="w-9 h-8" />
+            <div class="  w-9 h-8 flex items-center justify-center py-3 relative group cursor-pointer ">
+              <div class="absolute  ">
+                <router-link to="/card">
+                  <ShoppingCardIcon class="w-9 h-8" />
+                </router-link>
+              </div>
+              <div v-if="cartStore.cartItems.length > 0"
+                class="relative -top-4 -right-4 w-[25px] h-[25px] bg-red-600 text-white text-sm font-dana rounded-full flex items-center justify-center">
+                {{ cartStore.cartItems.length }}
+              </div>
+              
               <!-- show when hovered -->
               <div
                 class="absolute z-10 w-[400px] cursor-default top-full left-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible bg-white dark:bg-zinc-700 p-5 rounded-2xl border-t-[3px] transition-all delay-75 border-t-orange-300 shadow-normall">
@@ -67,9 +76,11 @@ const isAuthenticated = computed(() => authStore.user !== null);
                 <div class="cursor-default flex items-center justify-between font-DanaMedium text-xs tracking-tighter">
                   <span class="text-gray-300">{{ cartStore.cartItems.length }} مورد
                   </span>
-                  <a href="#" class="flex text-orange-300 items-center text-base justify-center">
+                  <router-link to="/card" class="flex text-orange-300 items-center text-base justify-center">
                     مشاهده سبد خرید
-                  </a>
+
+                  </router-link>
+
                 </div>
                 <!-- body card sabad -->
                 <div :class="{ 'h-[350px]': cartStore.cartItems.length > 2 }"
@@ -158,9 +169,9 @@ const isAuthenticated = computed(() => authStore.user !== null);
       </div>
     </div>
   </header>
-  <div
+  <div v-if="route.path === '/'"
     class="mt-[50px] md:mt-[-110px] min-h-[300px] md:min-h-screen bg-[url('/src/assets/svg/headerBgMobile.webp')] md:bg-[url('/src/assets/svg/headerBgDesktop.webp')] rounded-bl-[10%] w-full rounded-br-[10%] bg-[length:100%_100%] bg-no-repeat flex flex-col">
-    <SectionSubHaeder />
+    <SectionSubHaeder v-if="route.path === '/'" />
   </div>
 </template>
 
